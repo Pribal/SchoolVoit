@@ -10,7 +10,7 @@ background: linear-gradient(90deg, rgba(43,127,224,1) 0%, rgba(0,97,211,1) 27%, 
     </a>
   </div>
   <div class="col-8 text-center">
-    <img src='vue/images/SchoolVoit2.png' width="auto" height="75px">
+    <a href='index.php?ctl=annonce&action=vueAnnonces'><img src='vue/images/SchoolVoit2.png' width="auto" height="75px"></a>
   </div>
   <div class="col-2 d-flex justify-content-center">
       <div class="dropdown-center">
@@ -26,6 +26,8 @@ background: linear-gradient(90deg, rgba(43,127,224,1) 0%, rgba(0,97,211,1) 27%, 
         </button>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         <ul class="dropdown-menu text-center dropdown-menu-center" role="menu" aria-labelledby="menu1">
+              <li role="presentation"><a class= "nav-link" href='index.php?ctl=annonce&action=vueAnnonces'>Annonces</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=user&action=profilUser'>Profil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=user&action=deconnect'>Déconnexion</a></li>

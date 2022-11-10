@@ -14,7 +14,12 @@ if(isset($_GET['ctl']))
 		case 'user':
 			include 'controleur/ctl_user.php';
 			break;
+
+		case 'annonce':
+			include 'controleur/ctl_annonce.php';
+			break;
 	}
+
 }
 
 include ('vue/footer.php');

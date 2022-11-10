@@ -53,11 +53,9 @@ class DbUser{
 		return $result;  
 	}
 
-	public static function modifCar($id_car,$matricule,$marque,$modele)//REFAIRE REQUETE !!!
+	public static function modifCar($id_car,$matricule,$marque,$modele)
 	{
 		$sql = "UPDATE VEHICULE SET matricule = '$matricule', marque = '$marque', modele = '$modele' WHERE VEHICULE.id_car = $id_car;";
-		echo $sql;
-		die();
 		$objResultat = connectPdo::getObjPdo()->exec($sql);
 	}
 

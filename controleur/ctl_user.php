@@ -18,7 +18,7 @@ switch($action){
                    if(is_array($user))
                    {
                         $_SESSION['email']=$email;
-                        echo "<script>window.location.replace('index.php');</script>";
+                        echo "<script>window.location.replace('index.php?ctl=annonce&action=vueAnnonces');</script>";
                    }
                    else
                    {

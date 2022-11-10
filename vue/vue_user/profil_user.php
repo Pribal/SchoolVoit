@@ -13,7 +13,7 @@
 	}
 </style>
 
-<div style="display: flex; flex-direction: column; padding: 0; margin: 0 auto; width: fit-content; height: 90vh; align-items: center; background-color: rgba(255,255,255, 0.95);">
+<div style="display: flex; flex-direction: column; padding: 0; margin: 0 auto; width:50%; height: 90vh; align-items: center; background-color: rgba(255,255,255, 0.95);">
 	<!-- Carte Info perso -->
 	<div class="info-perso">
 		<h4><span><img src="vue/images/InfoPerso.gif" style="width: auto; height:60px;"></span> Informations personnelles</h4>
@@ -37,17 +37,6 @@
 			$compteur=1;
 			foreach($infoVehicule as $ligne)
 			{
-				// echo "<li class='list-group-item' id='".$ligne['id_car']."'>";
-				// echo "<h5>"."Voiture ".$compteur."<br></h5>";
-				// echo "Immatriculation : <span id='matricule'>".$ligne['matricule']."</span><br>";
-				// echo "Marque : <span id='marque'>".$ligne['marque']."</span><br>";
-				// echo "Modèle : <span id='modele'>".$ligne['modele']."</span><br>";
-				// echo "<button type='button' class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'>
-				// 		<img src='./vue/images/remove.png' height=20 width=20>
-				// 		</button>";
-				// echo "<button id='btn_modif_voit' class='btn' onclick='get_id_parent(this);'><img src='./vue/images/edit.png' height=20 width=20></button>";
-				// echo "</li>";
-				// $compteur++;	
 				?>
 				<div class="voiture" id="<?= $ligne['id_car'] ?>">
 					<h5><?= $ligne['marque']." ".$ligne['modele'].":" ?></h5>
