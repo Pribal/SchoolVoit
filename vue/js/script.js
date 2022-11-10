@@ -19,7 +19,7 @@ function verif_immat_ajout(immat)
 {
     msg = document.getElementById("immat_error_ajout");
     btn = document.getElementById("btn_ajout");
-    if(immat.value.length > 10)
+    if(immat.value.length >= 10)
     {
         msg.style.display = "block";
         btn.setAttribute("disabled", "");

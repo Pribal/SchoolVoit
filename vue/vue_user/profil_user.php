@@ -13,47 +13,58 @@
 	}
 </style>
 
-<div style="display: flex; flex-direction: column; padding: 0; margin: 0 auto; width:50%; height: 90vh; align-items: center; background-color: rgba(255,255,255, 0.95);">
+<div style="display: flex; flex-direction: column; padding: 0; margin: 0 auto; width:55%; height: 90vh; align-items: center; background-color: rgba(255,255,255, 0.98); justify-content: space-around;">
 	<!-- Carte Info perso -->
-	<div class="info-perso">
-		<h4><span><img src="vue/images/InfoPerso.gif" style="width: auto; height:60px;"></span> Informations personnelles</h4>
+	<div class="info-perso" style="display: flex; align-items: center;">
+		<div id="img" style="width: 50%; display: flex; align-items: center; justify-content: center;">
+			<img src="vue/images/InfoPerso.gif" style="width: 50%; height:auto;">
+		</div>
+		<div id="info" style="width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+			<h4><u>Informations personnelles</u></h4>
+			<div>
+				<p>Email : <?php echo $email ?></p>
+				<p>Nom : <?php echo $nom ?></p>
+				<p>Prenom : <?php echo $prenom ?></p>
+			</div>
+		</div>
+	</div>
+	<div id="voitures" style="width: 100%;">
+		<div class="info-voiture" style="display:flex; flex-direction: column; align-items: center;">
+			<img src="vue/images/voiture.gif" height="auto" width="25%">
+			<h4>Voitures <button type='button' class='btn' data-toggle='modal' data-target='#ajout_vehicule' style="padding: 0;padding-bottom: 4px;"><img src='./vue/images/plus.png' style="height: 20px; width: 20px;"></button></h4>
+		</div>
 		<br>
-		<ul>
-			<li class="list-group-item">Email : <?php echo $email ?></li><br>
-			<li class="list-group-item">Nom : <?php echo $nom ?></li><br>
-			<li class="list-group-item">Prenom : <?php echo $prenom ?></li><br>
-		</ul>	
-	</div>
-	<div class="info-voiture">
-		<h4><span><img src="vue/images/voiture.gif" height="60px" width="auto"></span> Voitures <button type='button' class='btn' data-toggle='modal' data-target='#ajout_vehicule'><img src='./vue/images/plus.png' height=20 width=20></button></h4>
-	</div>
-	<br>
-	<ul style="display: flex; justify-content: center;">
-		<?php
-		if(is_array($infoVehicule))
-		{
-		?>
+		<div style="display: flex; justify-content: space-around; width: 100%; align-items: center;">
 			<?php
-			$compteur=1;
-			foreach($infoVehicule as $ligne)
+			if(is_array($infoVehicule))
 			{
-				?>
-				<div class="voiture" id="<?= $ligne['id_car'] ?>">
-					<h5><?= $ligne['marque']." ".$ligne['modele'].":" ?></h5>
-					<ul style="list-style: none;">
-						<li>Marque : <span id='marque'><?= $ligne['marque'] ?></span></li>
-						<li>Modèle : <span id='modele'><?= $ligne['modele'] ?></span></li>
-						<li>Immatriculation : <span id='matricule'><?= $ligne['matricule'] ?></span></li>
-					</ul>
-					<button type='button' class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'><img src='./vue/images/remove.png' height=20 width=20></button>
-					<button type='button' class='btn' id="btn_modif_voit" data-toggle='modal' data-target='#modif_vehicule' onclick='get_id_parent(this);'><img src='./vue/images/edit.png' height=20 width=20></button>
-				</div>
-				<br>
+			?>
 				<?php
+				$compteur=1;
+				foreach($infoVehicule as $ligne)
+				{
+					?>
+					<div class="card" id="<?= $ligne['id_car'] ?>">
+						<div class="card-header">
+							<?= $ligne['marque']." ".$ligne['modele'] ?>
+						</div>
+						<div class="card-body">
+							<p>Marque : <span id='marque'><?= $ligne['marque'] ?></span></p>
+							<p>Modèle : <span id='modele'><?= $ligne['modele'] ?></span></p>
+							<p>Immatriculation : <span id='matricule'><?= $ligne['matricule'] ?></span></p>
+						</div>
+						<idv class="card-footer" id="<?= $ligne['id_car'] ?>" style="display: flex; justify-content: flex-end;">
+							<button type='button' title="Supprimer le véhicule" class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'><img src='./vue/images/remove.png' height=20 width=20></button>
+							<button type='button' title="Modifier le véhicule" class='btn' id="btn_modif_voit" data-toggle='modal' data-target='#modif_vehicule' onclick='get_id_parent(this);'><img src='./vue/images/edit.png' height=20 width=20></button>
+						</idv>
+					</div>
+					<br>
+					<?php
+				}
 			}
-		}
-		?>
-	</ul>
+			?>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="validDelete" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
