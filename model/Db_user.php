@@ -59,7 +59,5 @@ class DbUser{
 		$objResultat = connectPdo::getObjPdo()->exec($sql);
 	}
 
-
 }
-
 ?>

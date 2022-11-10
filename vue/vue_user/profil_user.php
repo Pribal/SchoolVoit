@@ -54,8 +54,26 @@
 							<p>Immatriculation : <span id='matricule'><?= $ligne['matricule'] ?></span></p>
 						</div>
 						<idv class="card-footer" id="<?= $ligne['id_car'] ?>" style="display: flex; justify-content: flex-end;">
-							<button type='button' title="Supprimer le véhicule" class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'><img src='./vue/images/remove.png' height=20 width=20></button>
-							<button type='button' title="Modifier le véhicule" class='btn' id="btn_modif_voit" data-toggle='modal' data-target='#modif_vehicule' onclick='get_id_parent(this);'><img src='./vue/images/edit.png' height=20 width=20></button>
+							<button type='button' title="Supprimer le véhicule" class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'>
+								<!-- <img src='./vue/images/remove.png' height=20 width=20> -->
+								<lord-icon
+									src="https://cdn.lordicon.com/kfzfxczd.json"
+									trigger="morph"
+									colors="primary:#000000"
+									state="morph-fill"
+									style="width:30px;height:30px">
+								</lord-icon>	
+							</button>
+							<button type='button' title="Modifier le véhicule" class='btn' id="btn_modif_voit" data-toggle='modal' data-target='#modif_vehicule' onclick='get_id_parent(this);'>
+								<!-- <img src='./vue/images/edit.png' height=20 width=20> -->
+								<lord-icon
+									    src="https://cdn.lordicon.com/hwuyodym.json"
+										trigger="loop-on-hover"
+										colors="primary:#000000"
+										state="hover-1"
+										style="width:30px;height:30px">
+								</lord-icon>
+							</button>
 						</idv>
 					</div>
 					<br>
