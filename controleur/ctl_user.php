@@ -18,6 +18,10 @@ switch($action){
                    if(is_array($user))
                    {
                         $_SESSION['email']=$email;
+                        $info = DbUser::getInfoUser($email);
+                        $_SESSION["prenom"] = $info[0]['prenom'];
+                        $_SESSION["nom"] = $info[0]['nom'];
+                        $_SESSION["id"] = $info[0]['id_user'];
                         echo "<script>window.location.replace('index.php?ctl=annonce&action=vueAnnonces');</script>";
                    }
                    else

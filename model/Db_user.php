@@ -13,7 +13,7 @@ class DbUser{
 
 	public static function getInfoUser($email)
 	{
-		$sql = "SELECT email, nom, prenom FROM USER WHERE email = '$email';";		
+		$sql = "SELECT * FROM USER WHERE email = '$email';";		
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result;
