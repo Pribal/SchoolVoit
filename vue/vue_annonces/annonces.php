@@ -1,10 +1,32 @@
-<?php
-?>
+<style>
+    #bouton_ajout_annonce {
+        height: 50%; 
+        background-color: transparent; 
+        color: #0d6efd;
+        border: none;
+        transition: background-color .5s, color .5s;
+        padding: 1px;
+    }
+
+    #bouton_ajout_annonce:hover {
+        background-color: rgba(13, 110, 253, 0.5);
+        color: black;
+    }
+
+</style>
+
+<div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
+    <div id="welcome" style="width: 50%; display: flex; justify-content: center; align-items: center;">
+        <h4>Bienvenue <span style="font-size: larger; background-image: url(vue/images/confetti-5.gif); font-size: 50px; font-weight: bolder; color: transparent;  background-clip: text; -webkit-background-clip: text;"><?= ucfirst($_SESSION["prenom"]) ?></span></h4>
+    </div>
+    <div id="ajout_annonce" style="width: 50%; display: flex; justify-content: center; align-items: center;">
+        <button class="btn btn-primary" id="bouton_ajout_annonce" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ajouter une annonce</button>
+    </div>
+</div>
+<hr>
 
 
 <!-- Bouton/Offcanvas Form Ajouter  -->
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ajouter une annonce</button>
-
 <div class="offcanvas offcanvas-end offcanvas-right" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style='width: 43vw;'>
   <div class="offcanvas-header">
     <h3  style='text-align:center; width:100%;'class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Ajouter une annonce</h3>
