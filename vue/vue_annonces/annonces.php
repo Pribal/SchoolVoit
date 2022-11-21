@@ -1,6 +1,3 @@
-<?php
-?>
-
 <!-- Bouton/Offcanvas Form Ajouter  -->
 <style>
     #bouton_ajout_annonce {
