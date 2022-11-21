@@ -2,17 +2,29 @@
     #bouton_ajout_annonce {
         height: 50%; 
         background-color: transparent; 
-        color: #0d6efd;
+        color: black;
         border: none;
-        transition: background-color .5s, color .5s;
-        padding: 1px;
+        border-radius: 0;
+        /* transition: border-bottom .5s; */
+        border-radius: 15px;
     }
 
     #bouton_ajout_annonce:hover {
-        background-color: rgba(13, 110, 253, 0.5);
-        color: black;
+        border-bottom: blue solid 2px;
+        border-radius: 0;
     }
 
+    hr {
+        width: 50%;
+        color: blue;
+        margin: 0 auto;
+    }
+
+    #annonces {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>
 
 <div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
@@ -23,7 +35,13 @@
         <button class="btn btn-primary" id="bouton_ajout_annonce" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ajouter une annonce</button>
     </div>
 </div>
-<hr>
+<br><hr><br>
+<div id="annonces">
+    <h3>Voici les Annonces les plus proche de chez vous</h3>
+    <br>
+    <img src="vue/images/maps.png" width="1000" height="auto">
+</div>
+
 
 
 <!-- Bouton/Offcanvas Form Ajouter  -->
