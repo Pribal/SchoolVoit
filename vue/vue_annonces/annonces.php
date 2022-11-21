@@ -39,53 +39,6 @@
 <div id="annonces">
     <h3>Voici les Annonces les plus proche de chez vous</h3>
     <br>
-    <img src="vue/images/maps.png" width="1000" height="auto">
-</div>
-
-
-
-<!-- Bouton/Offcanvas Form Ajouter  -->
-<style>
-    #bouton_ajout_annonce {
-        height: 50%; 
-        background-color: transparent; 
-        color: black;
-        border: none;
-        border-radius: 0;
-        /* transition: border-bottom .5s; */
-        border-radius: 15px;
-    }
-
-    #bouton_ajout_annonce:hover {
-        border-bottom: blue solid 2px;
-        border-radius: 0;
-    }
-
-    hr {
-        width: 50%;
-        color: blue;
-        margin: 0 auto;
-    }
-
-    #annonces {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-</style>
-
-<div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
-    <div id="welcome" style="width: 50%; display: flex; justify-content: center; align-items: center;">
-        <h4>Bienvenue <span style="font-size: larger; background-image: url(vue/images/confetti-5.gif); font-size: 50px; font-weight: bolder; color: transparent;  background-clip: text; -webkit-background-clip: text;"><?= ucfirst($_SESSION["prenom"]) ?></span></h4>
-    </div>
-    <div id="ajout_annonce" style="width: 50%; display: flex; justify-content: center; align-items: center;">
-        <button class="btn btn-primary" id="bouton_ajout_annonce" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ajouter une annonce</button>
-    </div>
-</div>
-<br><hr><br>
-<div id="annonces">
-    <h3>Voici les Annonces les plus proche de chez vous</h3>
-    <br>
     <?php
     foreach($listeAnnonce as $ligne)
     {    
