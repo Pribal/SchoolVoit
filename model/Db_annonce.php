@@ -20,7 +20,7 @@ class DbAnnonce{
 
 	public static function getAnnonces($id)
 	{
-		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place, fumeur FROM trajet WHERE id_user = $id;";
+		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place, fumeur FROM trajet WHERE id_user != $id;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result; 
@@ -33,6 +33,17 @@ class DbAnnonce{
 		$result = $objResultat->fetchAll();
 		return $result; 
 	}
-	
+
+	public static function getInfoAnnonce($id_trajet)
+	{
+		$sql = "SELECT *
+			from trajet,user,vehicule
+			WHERE user.id_user = trajet.id_user
+			AND trajet.id_car = vehicule.id_car
+			AND trajet.id_trajet = '$id_trajet';";
+		$objResultat = connectPdo::getObjPdo()->query($sql);	
+		$result = $objResultat->fetchAll();
+		return $result; 
+	}
 }
 ?>

@@ -55,3 +55,29 @@ function valid_del_car(e)
     url_modal.href = "index.php?ctl=user&action=DelCarUser&id_car=" + id;
 }
 
+//Echanger les valeurs du lieu de départ et du lieu d'arriver
+function swapDepartArrivee()
+{
+    depart = document.getElementById("lieuDepart");
+    arrivee = document.getElementById("lieuArrivee");
+
+    if(depart.value == 'Campus Saint Aspais' && depart.disabled) 
+    {
+        temp = arrivee.value;
+        arrivee.value = depart.value;
+        depart.value = temp;
+        arrivee.setAttribute('disabled', "");
+        depart.removeAttribute('disabled');
+        
+    }
+    else if(arrivee.value == 'Campus Saint Aspais' && arrivee.disabled)
+    {
+        temp = arrivee.value;
+        arrivee.value = depart.value;
+        depart.value = temp;
+        depart.setAttribute('disabled', "");
+        arrivee.removeAttribute('disabled');
+
+    }
+        
+}
