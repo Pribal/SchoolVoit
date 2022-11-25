@@ -171,5 +171,5 @@
   </div>
 </div>
 
-<script src="vue/js/script.js" type="text/javascript" language="javascript"></script>
-	
+	<script src="vue/js/script.js" type="text/javascript" language="javascript"></script>
+		

@@ -25,7 +25,31 @@
         flex-direction: column;
         align-items: center;
     }
+
+    #annonces_liste {
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+    }
+
+    .annonce {
+        background-color: #fbfffb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 20%;
+        border-style: outset;
+    }
+
+    .annonce > h5 {
+        white-space: nowrap;
+        margin: 0;
+    }
 </style>
+<?php
+setlocale(LC_TIME, 'fr_FR');
+date_default_timezone_set('Europe/Paris');
+?>
 
 <div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
     <div id="welcome" style="width: 50%; display: flex; justify-content: center; align-items: center;">
@@ -39,22 +63,42 @@
 <div id="annonces">
     <h3>Voici les Annonces les plus proche de chez vous</h3>
     <br>
-    <?php
-    foreach($listeAnnonce as $ligne)
-    {    
-        echo "<br> Annonce ".$ligne["id_trajet"]."<br>";
-        echo $ligne['depart']."<br>";
-        echo $ligne['lieu_depart']."<br>";
-        echo $ligne['lieu_arrivee']."<br>";
-        echo $ligne['nb_place']."<br>";
-        echo $ligne['fumeur']."<br>";
-    }
-    ?>
+    <div id="annonces_liste">
+        <?php
+        foreach($listeAnnonce as $ligne)
+        {    
+            ?>
+            <div class="card annonce">
+                <h5 class="card-title text-center">
+                    <?= strtoupper($ligne["lieu_depart"]) ?>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/jxwksgwv.json"
+                        trigger="loop-on-hover"
+                        delay="1000"
+                        colors="primary:#121331"
+                        state="hover-3"
+                        style="width:20%;height:40%">
+                    </lord-icon>
+                    <?= strtoupper($ligne["lieu_arrivee"]) ?>
+                </h5>
+                <div class="card-text">
+                    <ul>
+                        <li><?= date("l d F  H:i", strtotime($ligne['depart'])) ?></li>
+                        <li><?= $ligne["lieu_depart"] ?></li>
+                        <li><?= $ligne["lieu_arrivee"] ?></li>
+                        <li><?= $ligne["nb_place"] ?></li>
+                        <li><?= $ligne["fumeur"] ?></li>
+                    </ul>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
 </div>
 
 
 <!-- OffCanvas -->
->>>>>>>>> Temporary merge branch 2
 <div class="offcanvas offcanvas-end offcanvas-right" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style='width: 43vw;'>
   <div class="offcanvas-header">
     <h3  style='text-align:center; width:100%;'class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Ajouter une annonce</h3>
