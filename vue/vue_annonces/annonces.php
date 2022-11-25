@@ -108,14 +108,14 @@ date_default_timezone_set('Europe/Paris');
     <form style='text-align:center; font-size:20px;' method="POST" action="index.php?ctl=annonce&action=ValidAjout">
         <div class='mb-3'>   
             <label for="DateTrajet" class="form-label">Date du trajet</label>
-            <input type="datetime-local" class="form-control" id="DateTrajet" name='dateTrajet'>
+            <input type="datetime-local" class="form-control" id="DateTrajet" name='dateTrajet' required>
         </div>
         <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
             <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;">   
                 <label for="DateTrajet" class="form-label">Lieu de départ</label>
-                <input type="text" class="form-control" id="DateTrajet" name="lieuDepart">
+                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" value='Campus Saint Aspais' disabled required>
             </div>
-                <lord-icon
+                <lord-icon onclick="swapDepartArrivee()"
                     src="https://cdn.lordicon.com/qeberlkz.json"
                     trigger="loop-on-hover"
                     colors="primary:#000000"
@@ -124,7 +124,7 @@ date_default_timezone_set('Europe/Paris');
                 </lord-icon>
             <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;">     
                 <label for="DateTrajet" class="form-label">Lieu d'arrivée</label>
-                <input type="text" class="form-control" id="DateTrajet" name="lieuArrivee">
+                <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee" required>
             </div>
         </div>
         <div class='mb-3'>   
@@ -141,11 +141,11 @@ date_default_timezone_set('Europe/Paris');
 
         <div class='mb-3'>   
             <label for="voiture" class="form-label">Voiture utilisé</label>
-            <select id='idcar' name='idcar'>
+            <select id='idcar' name='idcar' required>
                 <?php
                     foreach($listecar as $ligne)
                     {
-                        echo "<option value=".$ligne['id_car'].">".$ligne['id_car']." ".$ligne['marque']." ".$ligne['modele']."</option>";
+                        echo "<option value=".$ligne['id_car'].">".$ligne['marque'].""." ".$ligne['modele']."</option>";
                     }
                 ?>
             </select>
@@ -153,8 +153,7 @@ date_default_timezone_set('Europe/Paris');
 
         <div class='mb-3'>
             <label class="form-label">Fumeur autorisé ?</label>
-            <input type="radio" id="contactChoice1"
-            name="fumeur" value="1" >
+            <input type="radio" id="contactChoice1" name="fumeur" value="1">
             <label for="contactChoice1">Oui</label>
             <input type="radio" id="contactChoice2"
             name="fumeur" value="0" checked>

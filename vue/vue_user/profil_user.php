@@ -170,6 +170,3 @@
     </div>
   </div>
 </div>
-
-	<script src="vue/js/script.js" type="text/javascript" language="javascript"></script>
-		
