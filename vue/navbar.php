@@ -28,6 +28,8 @@ background: linear-gradient(90deg, rgba(43,127,224,1) 0%, rgba(0,97,211,1) 27%, 
         <ul class="dropdown-menu text-center dropdown-menu-center" role="menu" aria-labelledby="menu1">
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=annonce&action=vueAnnonces'>Annonces</a></li>
               <li><hr class="dropdown-divider"></li>
+              <li role="presentation"><a class= "nav-link" href='index.php?ctl=reservation&action=vueReservation'>Annonces et Réservations</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=user&action=profilUser'>Profil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=user&action=deconnect'>Déconnexion</a></li>

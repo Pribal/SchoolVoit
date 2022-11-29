@@ -5,8 +5,10 @@ class DbAnnonce{
 	
     public static function ValidAjout($dateTrajet,$lieuDepart,$lieuArrivee,$nbPlace,$fumeur,$iduser,$idcar)
 	{
-		$sql = "INSERT INTO TRAJET (id_trajet, depart, lieu_depart, lieu_arrivee, nb_place, fumeur, id_user, id_car)
-		 VALUES (NULL, '$dateTrajet', '$lieuDepart', '$lieuArrivee', $nbPlace, $fumeur, $iduser, $idcar);";
+		$sql = "INSERT INTO TRAJET (id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur, id_user, id_car)
+		 VALUES (NULL, '$dateTrajet', '$lieuDepart', '$lieuArrivee', $nbPlace,$nbPlace, $fumeur, $iduser, $idcar);";
+		 echo $sql;
+		 die;
     	connectPdo::getObjPdo()->exec($sql);    
 	}
 
@@ -20,9 +22,7 @@ class DbAnnonce{
 
 	public static function getAnnonces($id)
 	{
-
-		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place, fumeur FROM TRAJET WHERE id_user = $id;";
-
+		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur FROM TRAJET WHERE id_user != $id;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result; 
@@ -30,7 +30,7 @@ class DbAnnonce{
 
 	public static function getCarAnnonces($id)
 	{
-		$sql = "SELECT id_car,marque,matricule FROM VEHICULE WHERE id_user = $id;";
+		$sql = "SELECT id_car,marque,matricule FROM VEHICULE WHERE id_user != $id;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result; 

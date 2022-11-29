@@ -87,6 +87,7 @@ date_default_timezone_set('Europe/Paris');
                         <li><?= $ligne["lieu_depart"] ?></li>
                         <li><?= $ligne["lieu_arrivee"] ?></li>
                         <li><?= $ligne["nb_place"] ?></li>
+                        <li><?= $ligne["nb_placeDispo"] ?></li>
                         <li><?= $ligne["fumeur"] ?></li>
                     </ul>
                 </div>
@@ -113,7 +114,7 @@ date_default_timezone_set('Europe/Paris');
         <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
             <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;">   
                 <label for="DateTrajet" class="form-label">Lieu de départ</label>
-                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" value='Campus Saint Aspais' disabled required>
+                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" value='Campus Saint Aspais' readonly required style="background-color:lightgrey;">
             </div>
                 <lord-icon onclick="swapDepartArrivee()"
                     src="https://cdn.lordicon.com/qeberlkz.json"

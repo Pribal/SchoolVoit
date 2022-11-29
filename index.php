@@ -18,6 +18,10 @@ if(isset($_GET['ctl']))
 		case 'annonce':
 			include 'controleur/ctl_annonce.php';
 			break;
+
+		case 'reservation':
+			include 'controleur/ctl_reservation.php';
+			break;
 	}
 
 }

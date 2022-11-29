@@ -61,22 +61,26 @@ function swapDepartArrivee()
     depart = document.getElementById("lieuDepart");
     arrivee = document.getElementById("lieuArrivee");
 
-    if(depart.value == 'Campus Saint Aspais' && depart.disabled) 
+    if(depart.value == 'Campus Saint Aspais') 
     {
         temp = arrivee.value;
         arrivee.value = depart.value;
         depart.value = temp;
-        arrivee.setAttribute('disabled', "");
-        depart.removeAttribute('disabled');
+        arrivee.setAttribute('readonly', "");
+        depart.removeAttribute('readonly');
+        arrivee.style.backgroundColor='lightgrey';
+        depart.style.backgroundColor='white';
         
     }
-    else if(arrivee.value == 'Campus Saint Aspais' && arrivee.disabled)
+    else if(arrivee.value == 'Campus Saint Aspais')
     {
         temp = arrivee.value;
         arrivee.value = depart.value;
         depart.value = temp;
-        depart.setAttribute('disabled', "");
-        arrivee.removeAttribute('disabled');
+        depart.setAttribute('readonly', "");
+        arrivee.removeAttribute('readonly');
+        depart.style.backgroundColor='lightgrey';
+        arrivee.style.backgroundColor='white';
 
     }
         
