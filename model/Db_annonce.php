@@ -7,7 +7,8 @@ class DbAnnonce{
 	{
 		$sql = "INSERT INTO TRAJET (id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur, id_user, id_car)
 		 VALUES (NULL, '$dateTrajet', '$lieuDepart', '$lieuArrivee', $nbPlace,$nbPlace, $fumeur, $iduser, $idcar);";
-    	connectPdo::getObjPdo()->exec($sql);    
+    	connectPdo::getObjPdo()->exec($sql);
+		header("location: http://localhost/SchoolVoit/index.php?ctl=annonce&action=vueAnnonces");    
 	}
 
 	public static function getlistecar($id)
