@@ -1,7 +1,7 @@
 <?php
 function get_carte_statique_itineraire($ad1, $ad2, $key)
 {
-    if(str_contains($ad1, " ") || str_contains($ad2, " "))
+    if(str_contains($ad1, " ") || str_contains($ad2, " "))
     {
         str_replace(" ", "+", $ad1);
         str_replace(" ", "+", $ad2);
