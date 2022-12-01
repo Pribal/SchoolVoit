@@ -37,7 +37,7 @@ class DbAnnonce{
 	public static function getInfoAnnonce($id_trajet)
 	{
 		$sql = "SELECT *
-			from trajet,user,vehicule
+			from TRAJET,USER,VEHICULE
 			WHERE user.id_user = trajet.id_user
 			AND trajet.id_car = vehicule.id_car
 			AND trajet.id_trajet = '$id_trajet';";

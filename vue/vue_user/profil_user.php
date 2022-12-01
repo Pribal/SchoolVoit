@@ -53,7 +53,7 @@
 							<p>Modèle : <span id='modele'><?= $ligne['modele'] ?></span></p>
 							<p>Immatriculation : <span id='matricule'><?= $ligne['matricule'] ?></span></p>
 						</div>
-						<idv class="card-footer" id="<?= $ligne['id_car'] ?>" style="display: flex; justify-content: flex-end;">
+						<div class="card-footer" id="<?= $ligne['id_car'] ?>" style="display: flex; justify-content: flex-end;">
 							<button type='button' title="Supprimer le véhicule" class='btn' data-toggle='modal' data-target='#validDelete' onclick='valid_del_car(this);'>
 								<!-- <img src='./vue/images/remove.png' height=20 width=20> -->
 								<lord-icon
@@ -74,7 +74,7 @@
 										style="width:30px;height:30px">
 								</lord-icon>
 							</button>
-						</idv>
+						</div>
 					</div>
 					<br>
 					<?php

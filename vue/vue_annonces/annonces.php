@@ -45,10 +45,23 @@
         white-space: nowrap;
         margin: 0;
     }
+
+    .list-group-item .list-group-item-action {
+        user-select: none; 
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none;
+    }
+
+    .list-group-item:hover .list-group-item-action:hover {
+        cursor: pointer;
+    }
 </style>
 <?php
 setlocale(LC_TIME, 'fr_FR');
 date_default_timezone_set('Europe/Paris');
+include("model/fonctions_php.php");
 ?>
 
 <div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
@@ -66,30 +79,36 @@ date_default_timezone_set('Europe/Paris');
     <div id="annonces_liste">
         <?php
         foreach($listeAnnonce as $ligne)
-        {    
+        {   
+            $img_url = get_carte_statique_itineraire($ligne["lieu_depart"], $ligne["lieu_arrivee"], "VC4Q3NkDA3A6FHjylBKhWXPGxKBe2OMo");
             ?>
-            <div class="card annonce">
-                <h5 class="card-title text-center">
-                    <?= strtoupper($ligne["lieu_depart"]) ?>
-                    <lord-icon
-                        src="https://cdn.lordicon.com/jxwksgwv.json"
-                        trigger="loop-on-hover"
-                        delay="1000"
-                        colors="primary:#121331"
-                        state="hover-3"
-                        style="width:20%;height:40%">
-                    </lord-icon>
-                    <?= strtoupper($ligne["lieu_arrivee"]) ?>
-                </h5>
-                <div class="card-text">
-                    <ul>
-                        <li><?= date("l d F  H:i", strtotime($ligne['depart'])) ?></li>
-                        <li><?= $ligne["lieu_depart"] ?></li>
-                        <li><?= $ligne["lieu_arrivee"] ?></li>
-                        <li><?= $ligne["nb_place"] ?></li>
-                        <li><?= $ligne["nb_placeDispo"] ?></li>
-                        <li><?= $ligne["fumeur"] ?></li>
-                    </ul>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="<?= $img_url ?>" style="height: 100%; width: 100%;" class="img-fluid rounded-start">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" style="font-size: small;">
+                                <?= strtoupper($ligne["lieu_depart"]) ?>
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/jxwksgwv.json"
+                                    trigger="loop-on-hover"
+                                    delay="1000"
+                                    colors="primary:#121331"
+                                    state="hover-3"
+                                    style="width:30px;height:30px">
+                                </lord-icon>
+                                <?= strtoupper($ligne["lieu_arrivee"]) ?>
+                            </h5>
+                            <p class="card-text">
+                                <ul style="list-style: none;">
+                                    <li>Le <?= date("l d F  H:i", strtotime($ligne['depart'])) ?></li>
+                                    <li>Reste <?= $ligne["nb_placeDispo"] ?> places disponibles</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php
@@ -112,20 +131,24 @@ date_default_timezone_set('Europe/Paris');
             <input type="datetime-local" class="form-control" id="DateTrajet" name='dateTrajet' required>
         </div>
         <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
-            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;">   
-                <label for="DateTrajet" class="form-label">Lieu de départ</label>
-                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" value='Campus Saint Aspais' readonly required style="background-color:lightgrey;">
+            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;position: relative;">   
+                <label for="lieuDepart" class="form-label">Lieu de départ</label>
+                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" value='Campus Saint Aspais' readonly required style="background-color:lightgrey;">
+                <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
+                </div>
             </div>
-                <lord-icon onclick="swapDepartArrivee()"
+                <lord-icon id="swap" onclick="swapDepartArrivee()"
                     src="https://cdn.lordicon.com/qeberlkz.json"
                     trigger="loop-on-hover"
                     colors="primary:#000000"
                     state="hover"
                     style="width:50px;height:50px">
                 </lord-icon>
-            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;">     
-                <label for="DateTrajet" class="form-label">Lieu d'arrivée</label>
-                <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee" required>
+            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center; position: relative;">     
+                <label for="lieuArrivee" class="form-label">Lieu d'arrivée <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'></label>
+                <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" required>
+                <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
+                </div>
             </div>
         </div>
         <div class='mb-3'>   
@@ -165,3 +188,22 @@ date_default_timezone_set('Europe/Paris');
     </form>
   </div>
 </div>
+
+<script>
+    const swap_button = document.getElementById("swap")
+    
+    swap_button.addEventListener("click", function() {
+        const depart = document.getElementById("lieuDepart")
+        const arrive = document.getElementById("lieuArrivee")
+
+        if (depart.readOnly)
+        {
+            depart.labels[0].innerHTML = "Lieu de départ"
+            arrive.labels[0].innerHTML = "Lieu d'arrivée <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'>"
+        }
+        else{
+            arrive.labels[0].innerHTML = "Lieu d'arrivée"
+            depart.labels[0].innerHTML = "Lieu de départ <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'>"
+        }
+    })
+</script>

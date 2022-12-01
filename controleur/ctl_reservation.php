@@ -30,8 +30,7 @@ switch($action){
         $listeAnnonces = DbReservation::getAnnoncebyID($id);
         $listeReservations = DbReservation::getReservationbyID($id);
         $listeDemandeValid = DbReservation::getDemandeValidAnnonce($id);
-        DbReservation::AccepterDemande($id_reservation);
-        DbReservation::SoustraitnbPlace($id_trajet);
+        DbReservation::AccepterDemande($id_reservation,$id_trajet);
         echo "<script>window.location.replace('index.php?ctl=reservation&action=vueReservation');</script>";
         break;
 
