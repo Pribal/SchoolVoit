@@ -7,8 +7,6 @@ class DbAnnonce{
 	{
 		$sql = "INSERT INTO TRAJET (id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur, id_user, id_car)
 		 VALUES (NULL, '$dateTrajet', '$lieuDepart', '$lieuArrivee', $nbPlace,$nbPlace, $fumeur, $iduser, $idcar);";
-		 echo $sql;
-		 die;
     	connectPdo::getObjPdo()->exec($sql);    
 	}
 
@@ -39,7 +37,7 @@ class DbAnnonce{
 	public static function getInfoAnnonce($id_trajet)
 	{
 		$sql = "SELECT *
-			from trajet,user,vehicule
+			from TRAJET,USER,VEHICULE
 			WHERE user.id_user = trajet.id_user
 			AND trajet.id_car = vehicule.id_car
 			AND trajet.id_trajet = '$id_trajet';";
