@@ -26,11 +26,12 @@ switch($action){
     case 'AccepterDemande':
         $id = $_SESSION['id'];
         $id_reservation = $_GET['id_reservation'];
-        $id_trajet = $_GET['trajet'];
+        $id_trajet = $_GET['id_trajet'];
         $listeAnnonces = DbReservation::getAnnoncebyID($id);
         $listeReservations = DbReservation::getReservationbyID($id);
         $listeDemandeValid = DbReservation::getDemandeValidAnnonce($id);
-        DbReservation::AccepterDemande($id_reservation, $id_trajet);
+        DbReservation::AccepterDemande($id_reservation);
+        DbReservation::SoustraitnbPlace($id_trajet);
         echo "<script>window.location.replace('index.php?ctl=reservation&action=vueReservation');</script>";
         break;
 
