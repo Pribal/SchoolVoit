@@ -20,6 +20,10 @@
         margin: 0 auto;
     }
 
+    .dropdown-divider {
+        width: 100%;
+    }
+
     #annonces {
         display: flex;
         flex-direction: column;
@@ -29,6 +33,8 @@
     #annonces_liste {
         display: flex;
         justify-content: space-around;
+        gap: 10px;
+        flex-wrap: wrap;
         width: 80%;
     }
 
@@ -57,6 +63,19 @@
     .list-group-item:hover .list-group-item-action:hover {
         cursor: pointer;
     }
+
+    .card {
+        transition: transform ease-in-out .3s;
+    }
+    .card:hover{
+        transform: scale(1.05)
+    }
+
+    .btn_annonce {
+        border: none;
+        background-color: white;
+    }
+
 </style>
 <?php
 setlocale(LC_TIME, 'fr_FR');
@@ -82,33 +101,42 @@ include("model/fonctions_php.php");
         {   
             $img_url = get_carte_statique_itineraire($ligne["lieu_depart"], $ligne["lieu_arrivee"], "VC4Q3NkDA3A6FHjylBKhWXPGxKBe2OMo");
             ?>
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="<?= $img_url ?>" style="height: 100%; width: 100%;" class="img-fluid rounded-start">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title text-center" style="font-size: small;">
-                                <?= strtoupper($ligne["lieu_depart"]) ?>
-                                <lord-icon
-                                    src="https://cdn.lordicon.com/jxwksgwv.json"
-                                    trigger="loop-on-hover"
-                                    delay="1000"
-                                    colors="primary:#121331"
-                                    state="hover-3"
-                                    style="width:30px;height:30px">
-                                </lord-icon>
-                                <?= strtoupper($ligne["lieu_arrivee"]) ?>
-                            </h5>
-                            <p class="card-text">
-                                <ul style="list-style: none;">
-                                    <li>Le <?= date("l d F  H:i", strtotime($ligne['depart'])) ?></li>
-                                    <li>Reste <?= $ligne["nb_placeDispo"] ?> places disponibles</li>
-                                </ul>
-                            </p>
+            <button class="btn_annonce btn" type="button" data-bs-toggle="offcanvas" data-bs-target="<?= "#trajet-".$ligne["id_trajet"] ?>" aria-controls="offcanvasBottom" onclick="create_map_route('<?= $ligne['lieu_depart'] ?>','<?= $ligne['lieu_arrivee'] ?>', <?= $ligne['id_trajet'] ?>)">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="<?= $img_url ?>" style="height: 100%; width: 100%;" class="img-fluid rounded-start">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" style="font-size: small;">
+                                    <?= strtoupper($ligne["lieu_depart"]) ?>
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/jxwksgwv.json"
+                                        trigger="loop-on-hover"
+                                        delay="1000"
+                                        colors="primary:#121331"
+                                        state="hover-3"
+                                        style="width:30px;height:30px">
+                                    </lord-icon>
+                                    <?= strtoupper($ligne["lieu_arrivee"]) ?>
+                                </h5>
+                                <p class="card-text">
+                                    <ul style="list-style: none;">
+                                        <li>Le <?= date_to_french($ligne["depart"]) ?></li>
+                                        <li>Reste <?= $ligne["nb_placeDispo"] ?> places disponibles</li>
+                                    </ul>
+                                </p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </button>
+            <div class="offcanvas offcanvas-bottom" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
+                <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw;">
+                </div>
+                <div style="height: 100%; width: 50vw;">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
             </div>
             <?php
@@ -133,7 +161,7 @@ include("model/fonctions_php.php");
         <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
             <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;position: relative;">   
                 <label for="lieuDepart" class="form-label">Lieu de départ</label>
-                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" value='Campus Saint Aspais' readonly required style="background-color:lightgrey;">
+                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" value='18 Rue Louis Beaunier, 77000 Melun, France' readonly required style="background-color:lightgrey;">
                 <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
                 </div>
             </div>

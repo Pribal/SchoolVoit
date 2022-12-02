@@ -15,10 +15,10 @@ class DbReservation{
 	public static function getReservationbyID($id)
 	{
 		$sql = "SELECT *
-		FROM reservation, trajet,user
-		WHERE user.id_user = reservation.id_user
-		AND trajet.id_trajet = reservation.id_trajet
-		AND reservation.id_user = $id;";
+		FROM RESERVATION, TRAJET,USER
+		WHERE USER.id_user = RESERVATION.id_user
+		AND TRAJET.id_trajet = RESERVATION.id_trajet
+		AND RESERVATION.id_user = $id;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result;   
@@ -29,7 +29,7 @@ class DbReservation{
 	{
 		$sql = "SELECT * FROM RESERVATION, TRAJET, USER 
 		WHERE RESERVATION.id_trajet = TRAJET.id_trajet
-		AND reservation.id_user = USER.id_user
+		AND RESERVATION.id_user = USER.id_user
 		AND TRAJET.id_user = $id
 		AND RESERVATION.reserve = 0";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
@@ -49,7 +49,7 @@ class DbReservation{
 	{
 		$sql ="UPDATE RESERVATION SET reserve = 1 WHERE RESERVATION.id_reservation = $id_reservation;";
 		connectPdo::getObjPdo()->exec($sql); 
-		$sql = "UPDATE trajet SET nb_placeDispo = nb_placeDispo-1 WHERE trajet.id_trajet = $id_trajet;";
+		$sql = "UPDATE TRAJET SET nb_placeDispo = nb_placeDispo-1 WHERE TRAJET.id_trajet = $id_trajet;";
 		connectPdo::getObjPdo()->exec($sql); 
 	}
 

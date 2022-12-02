@@ -61,7 +61,7 @@ function swapDepartArrivee()
     depart = document.getElementById("lieuDepart");
     arrivee = document.getElementById("lieuArrivee");
 
-    if(depart.value == 'Campus Saint Aspais') 
+    if(depart.value == '18 Rue Louis Beaunier, 77000 Melun, France') 
     {
         temp = arrivee.value;
         arrivee.value = depart.value;
@@ -72,7 +72,7 @@ function swapDepartArrivee()
         depart.style.backgroundColor='white';
         
     }
-    else if(arrivee.value == 'Campus Saint Aspais')
+    else if(arrivee.value == '18 Rue Louis Beaunier, 77000 Melun, France')
     {
         temp = arrivee.value;
         arrivee.value = depart.value;
@@ -110,6 +110,10 @@ function suggestion_addresse_dans_input(e)
     input.value = e.innerHTML
 }
 
+function voir_plus(e)
+{
+    e.style.tranform = "scale(1.5)";
+}
 // Fontions pour l'API Mapquest
 L.mapquest.key = "VC4Q3NkDA3A6FHjylBKhWXPGxKBe2OMo"
 
@@ -261,10 +265,10 @@ async function calc_center_map(adresse1, adresse2)
     return result
 }
 
-async function create_map_route(adresse1, adresse2)
+async function create_map_route(adresse1, adresse2, id_trajet)
 {
     var center_map = await calc_center_map(adresse1, adresse2)
-    var map = L.mapquest.map("map", {
+    var map = L.mapquest.map("map-" + id_trajet, {
         center: [center_map[0], center_map[1]],
         layers: L.mapquest.tileLayer('map'),
         zoom: 15    
