@@ -193,6 +193,30 @@ async function get_name_by_coords(lat, lng)
 
 }
 
+async function get_info_itineraire(ad1, ad2)
+{
+    if (ad1.includes(" ") || ad2.includes(" "))
+    {
+        ad1.replaceAll(" ", "+")
+        ad2.replaceAll(" ", "+")
+    }
+
+    url = "http://www.mapquestapi.com/directions/v2/route?key="+ L.mapquest.key +"&unit=k&locale=fr_FR&from="+ad1+"&to="+ad2
+
+    result = await fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                return data
+            })
+
+
+    var data = {
+        distance: result["route"]["legs"][0]["distance"],
+        temps: result["route"]["legs"][0]["formattedTime"]
+    }
+    return data
+}
+
 function get_position()
 {
     return new Promise((res, rej) => {
@@ -234,25 +258,6 @@ async function get_place_by_name(name)
     }
 }
 
-function get_info_intineraire(adresse1 , adresse2)
-{
-    for (let i = 0; i < arguments.length; i++)
-    {
-        if (arguments[i].includes(" "))
-        {
-            arguments[i] = arguments[i].replaceAll(" ", "+")
-        }
-    }
-    url = "http://www.mapquestapi.com/directions/v2/route?key="+ L.mapquest.key +"&unit=k&from="+ adresse1 +"&to="+ adresse2 +""
-
-    var request = fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    return data
-                })
-    return request
-}
-
 async function calc_center_map(adresse1, adresse2)
 {
     var data1 = await get_coords_by_name(adresse1)
@@ -267,6 +272,16 @@ async function calc_center_map(adresse1, adresse2)
 
 async function create_map_route(adresse1, adresse2, id_trajet)
 {
+    var offconvas = document.getElementById("trajet-"+id_trajet) 
+
+    var span_distance = offconvas.querySelector("#distance")
+    var span_temps = offconvas.querySelector("#temps_trajet")
+
+    var info_trajet = await get_info_itineraire(adresse1, adresse2)
+
+    span_distance.innerHTML = info_trajet["distance"]
+    span_temps.innerHTML = info_trajet["temps"]
+
     var center_map = await calc_center_map(adresse1, adresse2)
     var map = L.mapquest.map("map-" + id_trajet, {
         center: [center_map[0], center_map[1]],

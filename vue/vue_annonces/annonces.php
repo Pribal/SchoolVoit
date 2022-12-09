@@ -83,7 +83,7 @@ date_default_timezone_set('Europe/Paris');
 include("model/fonctions_php.php");
 ?>
 
-<div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh;">
+<div id="header_annonce" style="display: flex; font-family: Verdana; height: 10vh; margin-top: 10vh;">
     <div id="welcome" style="width: 50%; display: flex; justify-content: center; align-items: center;">
         <h4>Bienvenue <span style="font-size: larger; background-image: url(vue/images/confetti-5.gif); font-size: 50px; font-weight: bolder; color: transparent;  background-clip: text; -webkit-background-clip: text;"><?= ucfirst($_SESSION["prenom"]) ?></span></h4>
     </div>
@@ -93,7 +93,7 @@ include("model/fonctions_php.php");
 </div>
 <br><hr><br>
 <div id="annonces">
-    <h3>Voici les Annonces les plus proche de chez vous</h3>
+    <h3>Annonces proches de chez vous</h3>
     <br>
     <div id="annonces_liste">
         <?php
@@ -109,7 +109,7 @@ include("model/fonctions_php.php");
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title text-center" style="font-size: small;">
+                                <div class="card-title text-center" style="font-size: small; display: flex; flex-direction: column; align-items: center;">
                                     <?= strtoupper($ligne["lieu_depart"]) ?>
                                     <lord-icon
                                         src="https://cdn.lordicon.com/jxwksgwv.json"
@@ -117,10 +117,10 @@ include("model/fonctions_php.php");
                                         delay="1000"
                                         colors="primary:#121331"
                                         state="hover-3"
-                                        style="width:30px;height:30px">
+                                        style="width:30px;height:30px; transform: rotate(90deg);">
                                     </lord-icon>
                                     <?= strtoupper($ligne["lieu_arrivee"]) ?>
-                                </h5>
+                                </div>
                                 <p class="card-text">
                                     <ul style="list-style: none;">
                                         <li>Le <?= date_to_french($ligne["depart"]) ?></li>
@@ -132,11 +132,42 @@ include("model/fonctions_php.php");
                     </div>
                 </div>
             </button>
-            <div class="offcanvas offcanvas-bottom" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
+            <?php
+                $info_annonce = DbAnnonce::getInfoAnnonce($ligne["id_trajet"]);
+            ?>
+            <div class="offcanvas offcanvas-bottom" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
                 <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw;">
                 </div>
-                <div style="height: 100%; width: 50vw;">
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div style="height: 100%; width: 50vw; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="transform: scale(1.3);"></button>
+                    </div>
+                    <div style="display:flex; align-items: center; flex-direction: column; height: 90%; justify-content: space-between;">
+                        <h3>Trajet de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?></h3>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <p style="font-size: xxl-large; margin: 0;"><?= $info_annonce[0]["lieu_depart"] ?></p>
+                            <img src="vue/images/route.png" style="height: 3em; width: 3em; transform: rotate(90deg);">
+                            <p style="font-size: xxl-large;"><?= $info_annonce[0]["lieu_arrivee"] ?></p>
+                        </div>
+                        <div style="width: 100%;">
+                            <div style="display: flex; width: 100%;">
+                                <div style="width: 50%; display: flex; align-items: center; flex-direction: column; justify-content: center;">
+                                    <p>Distance: <span id="distance"></span>km</p>
+                                    <p>Durée du trajet: <span id="temps_trajet"></span></p>
+                                </div>
+                                <div style="width: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                                    <img src="vue/images/icon_voiture.png" style="height: 4em; width: 4em;">
+                                    <h5>Voiture de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?>:</h5>
+                                    <?= $info_annonce[0]["marque"]." ".$info_annonce[0]["modele"] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; width: 90%; align-items: center; justify-content: center;">
+                            <p style="margin: 0;">Spécification du trajet:</p>
+                            &nbsp;&nbsp;&nbsp;
+                            <img src="<?php if($info_annonce[0]["fumeur"]){echo "vue/images/cigarette.png";}else{echo "vue/images/ne-pas-fumer.png";}?>" style="height: 3em; width: 3em;">
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php

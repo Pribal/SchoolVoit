@@ -42,9 +42,9 @@ class DbAnnonce{
 	{
 		$sql = "SELECT *
 			from TRAJET,USER,VEHICULE
-			WHERE user.id_user = trajet.id_user
-			AND trajet.id_car = VEHICULE.id_car
-			AND trajet.id_trajet = '$id_trajet';";
+			WHERE USER.id_user = TRAJET.id_user
+			AND TRAJET.id_car = VEHICULE.id_car
+			AND TRAJET.id_trajet = '$id_trajet';";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result; 
