@@ -16,6 +16,7 @@ function date_to_french($date)
 
     $date = strtotime($date);
 
-    echo $semaine[date("N",$date) - 1]." ".date("j", $date)." ".$mois[date("n", $date)- 1];
+    echo $semaine[date("N",$date) - 1]." ".date("j", $date)." ".$mois[date("n", $date)- 1]." à ".date("G\hH", $date);
 }
+
 ?>

@@ -2,7 +2,7 @@
 if(isset($_SESSION['email']))
 {
 ?>
-<nav class="navbar" style="background: rgb(0,97,211);
+<nav class="navbar fixed-top" style="background: rgb(0,97,211);
 background: linear-gradient(90deg, rgba(43,127,224,1) 0%, rgba(0,97,211,1) 27%, rgba(0,97,211,1) 55%, rgba(43,127,224,1) 75%); height: 10vh;">
   <div class="col-2 d-flex justify-content-center">
     <a class="navbar-brand" href="#">
@@ -25,7 +25,7 @@ background: linear-gradient(90deg, rgba(43,127,224,1) 0%, rgba(0,97,211,1) 27%, 
           </lord-icon>
         </button>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        <ul class="dropdown-menu text-center dropdown-menu-center" role="menu" aria-labelledby="menu1">
+        <ul class="dropdown-menu text-center dropdown-menu-center" role="menu" aria-labelledby="menu1" style="position: absolute; z-index: 9999;">
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=annonce&action=vueAnnonces'>Annonces</a></li>
               <li><hr class="dropdown-divider"></li>
               <li role="presentation"><a class= "nav-link" href='index.php?ctl=reservation&action=vueReservation'>Annonces et Réservations</a></li>
