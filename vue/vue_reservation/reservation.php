@@ -12,8 +12,21 @@ foreach($listeAnnonces as $ligne)
             <li class="list-group-item">Date : <?php echo $ligne['depart'] ?></li>
             <li class="list-group-item">Lieu départ : <?php echo $ligne['lieu_depart'] ?></li>
             <li class="list-group-item">Lieu arrivée : <?php echo $ligne['lieu_arrivee'] ?></li>
-            <li class="list-group-item">Nombre de place : <?php echo $ligne['nb_place'] ?></li>
-            <li class="list-group-item">Fumeur autorisé : <?php echo $ligne['fumeur'] ?></li>
+            <li class="list-group-item">Nombre de places restantes :
+            <?php 
+                    if($ligne['nb_placeDispo']>0)
+                        echo $ligne['nb_placeDispo'];
+                    else
+                        echo "<span style='color: red;'>Complet</span>";
+                 ?></li>
+            <li class="list-group-item">Fumeur autorisé :
+                 <?php 
+                    if($ligne['fumeur']==0)
+                        echo "Non";
+                    else
+                        echo "Oui";
+                 ?>
+            </li>    
         </ul>
         <div class="card-footer">
             Véhicule
@@ -43,8 +56,15 @@ foreach($listeReservations as $ligne)
             <li class="list-group-item">Date : <?php echo $ligne['depart'] ?></li>
             <li class="list-group-item">Lieu départ : <?php echo $ligne['lieu_depart'] ?></li>
             <li class="list-group-item">Lieu arrivée : <?php echo $ligne['lieu_arrivee'] ?></li>
-            <li class="list-group-item">Nombre de place : <?php echo $ligne['nb_place'] ?></li>
-            <li class="list-group-item">Fumeur autorisé : <?php echo $ligne['fumeur'] ?></li>
+            <li class="list-group-item">Nombre de places restantes : <?php echo $ligne['nb_placeDispo'] ?></li>
+            <li class="list-group-item">Fumeur autorisé :
+                 <?php 
+                    if($ligne['fumeur']==0)
+                        echo "Non";
+                    else
+                        echo "Oui";
+                 ?>
+            </li>
         </ul>
         <div class="card-footer">
             Status :
@@ -75,8 +95,9 @@ foreach($listeDemandeValid as $ligne)
             Informations de l'annonce :
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item"><?php echo $ligne['lieu_depart']." -> ".$ligne['lieu_arrivee'] ?></li>
+            <li class="list-group-item"><?php echo $ligne['lieu_depart']." -> ".$ligne['lieu_arrivee'] ?></li>
             <li class="list-group-item">Date : <?php echo $ligne['depart'] ?></li>
+            <li class="list-group-item">Nombre de places restantes : <?php echo $ligne['nb_placeDispo'] ?></li>
         </ul>
         <div class="card-header">
             Informations de la personne :
