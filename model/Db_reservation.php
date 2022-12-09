@@ -5,7 +5,10 @@ class DbReservation{
 	//Récuperer les annonces publiés de l'utilisateur
 	public static function getAnnoncebyID($id)
 	{
-		$sql = "SELECT * from TRAJET, VEHICULE where TRAJET.id_car = VEHICULE.id_car and TRAJET.id_user = $id;";		
+		$sql = "SELECT *
+		 from TRAJET, VEHICULE 
+		 where TRAJET.id_car = VEHICULE.id_car 
+		 and TRAJET.id_user = $id;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result;    
@@ -37,6 +40,7 @@ class DbReservation{
 		return $result;   
 	}
 
+	//Quand une demande est refuseé, la ligne réservation est supprimé
 	public static function RefuserDemande($id_reservation)
 	{
 		$sql = "DELETE FROM RESERVATION WHERE RESERVATION.id_reservation = $id_reservation;";
@@ -50,6 +54,16 @@ class DbReservation{
 		$sql ="UPDATE RESERVATION SET reserve = 1 WHERE RESERVATION.id_reservation = $id_reservation;";
 		connectPdo::getObjPdo()->exec($sql); 
 		$sql = "UPDATE TRAJET SET nb_placeDispo = nb_placeDispo-1 WHERE TRAJET.id_trajet = $id_trajet;";
+		connectPdo::getObjPdo()->exec($sql); 
+	}
+
+	public static function SuppReservationComplete()
+	{
+		$sql = "DELETE FROM RESERVATION WHERE RESERVATION.id_reservation IN (SELECT id_reservation
+																			FROM TRAJET
+																			WHERE RESERVATION.id_trajet = TRAJET.id_trajet
+																			AND TRAJET.nb_placeDispo <=0
+																			AND RESERVATION.reserve = 0);";
 		connectPdo::getObjPdo()->exec($sql); 
 	}
 

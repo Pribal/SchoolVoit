@@ -21,7 +21,10 @@ class DbAnnonce{
 
 	public static function getAnnonces($id)
 	{
-		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur FROM TRAJET WHERE id_user != $id;";
+		$sql = "SELECT id_trajet, depart, lieu_depart, lieu_arrivee, nb_place,nb_placeDispo, fumeur 
+		FROM TRAJET 
+		WHERE id_user != $id
+		AND nb_placeDispo > 0;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	
 		$result = $objResultat->fetchAll();
 		return $result; 

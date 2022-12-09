@@ -10,6 +10,7 @@ switch($action){
         $listeAnnonces = DbReservation::getAnnoncebyID($id);
         $listeReservations = DbReservation::getReservationbyID($id);
         $listeDemandeValid = DbReservation::getDemandeValidAnnonce($id);
+        DbReservation::SuppReservationComplete();
         include 'vue/vue_reservation/reservation.php';
         break;
     
