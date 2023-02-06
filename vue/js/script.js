@@ -276,6 +276,7 @@ async function create_map_route(adresse1, adresse2, id_trajet)
 
     var span_distance = offconvas.querySelector("#distance")
     var span_temps = offconvas.querySelector("#temps_trajet")
+    var loader = document.getElementById("loader-"+id_trajet) 
 
     var info_trajet = await get_info_itineraire(adresse1, adresse2)
 
@@ -283,14 +284,20 @@ async function create_map_route(adresse1, adresse2, id_trajet)
     span_temps.innerHTML = info_trajet["temps"]
 
     var center_map = await calc_center_map(adresse1, adresse2)
-    var map = L.mapquest.map("map-" + id_trajet, {
-        center: [center_map[0], center_map[1]],
+    var map = L.mapquest.map("map-" + id_trajet,{
         layers: L.mapquest.tileLayer('map'),
-        zoom: 15    
+        center: [center_map[0], center_map[1]],
+        zoom: 15
     })
-    
-    L.mapquest.directions().route({
-        start: adresse1,
-        end: adresse2
-    })
-}
+
+    map.whenReady(function(e) {
+        loader.style.display = "none";
+        e.target._container.style.display = "block";
+        map.invalidateSize()
+        var lat_lng = L.latLng(center_map[0], center_map[1])
+        map.setView(lat_lng, 15)
+        L.mapquest.directions().route({
+            start: adresse1,
+            end: adresse2
+        })
+    })}

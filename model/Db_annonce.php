@@ -49,5 +49,13 @@ class DbAnnonce{
 		$result = $objResultat->fetchAll();
 		return $result; 
 	}
+
+	public static function count_nb_annonce($id_user)
+	{
+		$sql = "SELECT COUNT(*) FROM TRAJET WHERE id_user != $id_user;";
+		$objResultat = connectPdo::getObjPdo()->query($sql);	
+		$result = $objResultat->fetchAll();
+		return $result[0][0]; 
+	}
 }
-?>
+?> 

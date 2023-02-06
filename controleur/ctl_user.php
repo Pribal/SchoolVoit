@@ -22,6 +22,7 @@ switch($action){
                         $_SESSION["prenom"] = $info[0]['prenom'];
                         $_SESSION["nom"] = $info[0]['nom'];
                         $_SESSION["id"] = $info[0]['id_user'];
+                        $_SESSION["url_img_annonce"] = array();
                         echo "<script>window.location.replace('index.php?ctl=annonce&action=vueAnnonces');</script>";
                    }
                    else
@@ -36,6 +37,7 @@ switch($action){
                 //appel à la base de donnée le modele
                 session_unset();
                 session_destroy();
+                setcookie("PHPSESSID","",time()-3600,"/");
                 //appel à la vue
                 header('Location: index.php');
                 break;

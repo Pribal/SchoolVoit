@@ -1,3 +1,8 @@
+<!-- <script>
+    window.addEventListener("load", {
+        
+    })
+</script> -->
 <style>
     #bouton_ajout_annonce {
         height: 50%; 
@@ -66,9 +71,11 @@
 
     .card {
         transition: transform ease-in-out .3s;
+        box-shadow: 10px 10px 10px #b2b2b2;
     }
     .card:hover{
-        transform: scale(1.05)
+        transform: scale(1.05);
+        box-shadow: 15px 15px 15px #b2b2b2;
     }
 
     .btn_annonce {
@@ -76,6 +83,21 @@
         background-color: white;
     }
 
+    .menu-deroulant-triangle{
+        border-radius: 10px;
+        width: 40%;
+        transition: background-color ease-in-out 0.2s;
+        cursor: pointer;
+    }
+
+    .menu-deroulant-triangle:hover{
+        background-color: rgba(0,97,211, .2)
+    }
+
+    .annonce_text {
+        font-size: .8em;
+        color: gray;
+    }
 </style>
 <?php
 setlocale(LC_TIME, 'fr_FR');
@@ -99,13 +121,19 @@ include("model/fonctions_php.php");
         <?php
         foreach($listeAnnonce as $ligne)
         {   
-            $img_url = get_carte_statique_itineraire($ligne["lieu_depart"], $ligne["lieu_arrivee"], "VC4Q3NkDA3A6FHjylBKhWXPGxKBe2OMo");
+            $nb_annonce = DbAnnonce::count_nb_annonce($_SESSION["id"]);
+            if(count($_SESSION["url_img_annonce"]) != $nb_annonce)
+            {
+                $img_url = get_carte_statique_itineraire($ligne["lieu_depart"], $ligne["lieu_arrivee"], "VC4Q3NkDA3A6FHjylBKhWXPGxKBe2OMo");
+                $_SESSION["url_img_annonce"][$ligne["id_trajet"]] = $img_url;
+            }
             ?>
             <button class="btn_annonce btn" type="button" data-bs-toggle="offcanvas" data-bs-target="<?= "#trajet-".$ligne["id_trajet"] ?>" aria-controls="offcanvasBottom" onclick="create_map_route('<?= $ligne['lieu_depart'] ?>','<?= $ligne['lieu_arrivee'] ?>', <?= $ligne['id_trajet'] ?>)">
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="<?= $img_url ?>" style="height: 100%; width: 100%;" class="img-fluid rounded-start">
+                            <img src="<?= $_SESSION["url_img_annonce"][$ligne["id_trajet"]] ?>" style="height: 100%; width: 100%;" class="img-fluid rounded-start">
+                            <!-- <div class="spinner-border text-primary" height=200 width=200></div> -->
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -136,11 +164,13 @@ include("model/fonctions_php.php");
                 $info_annonce = DbAnnonce::getInfoAnnonce($ligne["id_trajet"]);
             ?>
             <div class="offcanvas offcanvas-bottom" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
-                <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw;">
+                <div id="loader-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: flex; justify-content: center; align-items: center;">
+                    <img src="vue/images/car_wheel_loader.gif">
                 </div>
+                <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: none;"></div>
                 <div style="height: 100%; width: 50vw; display: flex; flex-direction: column;">
                     <div style="display: flex; justify-content: flex-end;">
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="transform: scale(1.3);"></button>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="transform: scale(1.3);margin: 1vw;"></button>
                     </div>
                     <div style="display:flex; align-items: center; flex-direction: column; height: 90%; justify-content: space-between;">
                         <h3>Trajet de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?></h3>
@@ -167,6 +197,9 @@ include("model/fonctions_php.php");
                             &nbsp;&nbsp;&nbsp;
                             <img src="<?php if($info_annonce[0]["fumeur"]){echo "vue/images/cigarette.png";}else{echo "vue/images/ne-pas-fumer.png";}?>" style="height: 3em; width: 3em;">
                         </div>
+                        <div style="display:flex; justify-content: flex-end;">
+                            <button class="btn btn-success">Réserver le trajet</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,76 +213,86 @@ include("model/fonctions_php.php");
 <!-- OffCanvas -->
 <div class="offcanvas offcanvas-end offcanvas-right" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style='width: 43vw;'>
   <div class="offcanvas-header">
-    <h3  style='text-align:center; width:100%;'class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Ajouter une annonce</h3>
+    <h3  style='text-align:center; width:100%;'class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Ajout d'une annonce</h3>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <form style='text-align:center; font-size:20px;' method="POST" action="index.php?ctl=annonce&action=ValidAjout">
-        <div class='mb-3'>   
-            <label for="DateTrajet" class="form-label">Date du trajet</label>
-            <input type="datetime-local" class="form-control" id="DateTrajet" name='dateTrajet' required>
-        </div>
-        <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
-            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;position: relative;">   
-                <label for="lieuDepart" class="form-label">Lieu de départ</label>
-                <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" value='18 Rue Louis Beaunier, 77000 Melun, France' readonly required style="background-color:lightgrey;">
-                <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
+    <form style='font-size:20px; width: 100%; height: 100%;display: flex; flex-direction: column; justify-content: space-between;' method="POST" action="index.php?ctl=annonce&action=ValidAjout">
+        <div style="height: 70%;">
+            <div style="display: flex; align-items: center; justify-content: flex-start;">
+                <h5 style="border-bottom: blue 2px solid; width: fit-content;">Informations obligatoires: </h5>
+            </div>
+            <div style="height: 100%; display:flex; flex-direction: column; justify-content: space-evenly;">
+                <div class='mb-3' style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 50%;">
+                        <label for="DateTrajet" class="form-label annonce_text">Date du trajet</label>
+                    </div>   
+                    <input type="datetime-local" style="width: 50%; text-align: center;" class="form-control" id="DateTrajet" name='dateTrajet' required>
+                </div>
+                <div style='display:flex; width:100%; justify-content:space-between; align-items: center;'>
+                    <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center;position: relative;">   
+                        <label for="lieuDepart" class="form-label annonce_text" style="text-align: center;">Lieu de départ</label>
+                        <input type="text" class="form-control" id="lieuDepart" name="lieuDepart" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" value='18 Rue Louis Beaunier, 77000 Melun, France' readonly required style="background-color:lightgrey;">
+                        <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
+                        </div>
+                    </div>
+                        <lord-icon id="swap" onclick="swapDepartArrivee()"
+                            src="https://cdn.lordicon.com/qeberlkz.json"
+                            trigger="loop-on-hover"
+                            colors="primary:#000000"
+                            state="hover"
+                            style="width:50px;height:50px;margin-top: 1vh">
+                        </lord-icon>
+                    <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center; position: relative;">     
+                        <label for="lieuArrivee" class="form-label annonce_text" style="text-align: center;">Lieu d'arrivée <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'></label>
+                        <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" required>
+                        <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class='mb-3' style="display: flex; justify-content: space-around;">   
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <label for="voiture" class="form-label annonce_text">Voiture utilisé</label>
+                        <select id='idcar' name='idcar' required>
+                            <?php
+                                foreach($listecar as $ligne)
+                                {
+                                    echo "<option value=".$ligne['id_car'].">".$ligne['marque'].""." ".$ligne['modele']."</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <label for="nbPlace" class="form-label annonce_text">Nombre de places</label>
+                        <p id="nbplace_renderer">0</p>
+                        <input type="range" id='nbPlace' name='nbPlace' min="0" max="10" value="0">
+                    </div>
                 </div>
             </div>
-                <lord-icon id="swap" onclick="swapDepartArrivee()"
-                    src="https://cdn.lordicon.com/qeberlkz.json"
-                    trigger="loop-on-hover"
-                    colors="primary:#000000"
-                    state="hover"
-                    style="width:50px;height:50px">
-                </lord-icon>
-            <div class='mb-3' style="width:45%; display:flex; flex-direction:column;align-items:center; position: relative;">     
-                <label for="lieuArrivee" class="form-label">Lieu d'arrivée <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'></label>
-                <input type="text" class="form-control" id="lieuArrivee" name="lieuArrivee" onfocusout="empty_a_div(this.nextElementSibling)" oninput='affiche_resultat(this, this.value)' onfocusin='affiche_resultat(this, this.value)' autocomplete="off" required>
-                <div class="list-group" style="position: absolute; bottom: 0; transform: translateY(100%); width: 100%">
-                </div>
+        </div>
+        <div>
+            <div style="display: flex; align-items: center; justify-content: flex-start;">
+                <h5 style="border-bottom: blue 2px solid; width: fit-content;">Informations complémentaires</h5>
+            </div>
+            <div class='mb-3'>
+                <label class="form-label">Trajet Fumeur: </label>
+                <input type="radio" id="contactChoice1" name="fumeur" value="1">
+                <label for="contactChoice1">Oui</label>
+                <input type="radio" id="contactChoice2"
+                name="fumeur" value="0" checked>
+                <label for="contactChoice2">Non</label>
             </div>
         </div>
-        <div class='mb-3'>   
-            <label for="nbPlace" class="form-label">Nombre de places</label>
-            <select id='nbPlace' name='nbPlace'>
-                <?php
-                for($i=0;$i<=10;$i++)
-                {
-                    echo "<option value=".$i.">".$i."</option>";
-                }
-                ?>
-            </select>
+        <div style="display: flex; justify-content: center;" >
+            <button type="submit" class="btn btn-primary" style="width: 40%; ">Ajouter</button>
         </div>
-
-        <div class='mb-3'>   
-            <label for="voiture" class="form-label">Voiture utilisé</label>
-            <select id='idcar' name='idcar' required>
-                <?php
-                    foreach($listecar as $ligne)
-                    {
-                        echo "<option value=".$ligne['id_car'].">".$ligne['marque'].""." ".$ligne['modele']."</option>";
-                    }
-                ?>
-            </select>
-        </div>
-
-        <div class='mb-3'>
-            <label class="form-label">Fumeur autorisé ?</label>
-            <input type="radio" id="contactChoice1" name="fumeur" value="1">
-            <label for="contactChoice1">Oui</label>
-            <input type="radio" id="contactChoice2"
-            name="fumeur" value="0" checked>
-            <label for="contactChoice2">Non</label>
-        </div>
-        
-        <button type="submit" class="btn btn-dark">Ajouter</button>
     </form>
   </div>
 </div>
 
 <script>
     const swap_button = document.getElementById("swap")
+    const nbplace_range = document.getElementById("nbPlace")
     
     swap_button.addEventListener("click", function() {
         const depart = document.getElementById("lieuDepart")
@@ -265,4 +308,10 @@ include("model/fonctions_php.php");
             depart.labels[0].innerHTML = "Lieu de départ <img src='vue/images/location-sign.png' onclick='insert_geoloaction_in_input(this)' style='height: 10%; width: 10%;'>"
         }
     })
+
+    nbplace_range.addEventListener("input", function() {
+        const nbplace_renderer = document.getElementById("nbplace_renderer")
+        nbplace_renderer.innerHTML = nbplace_range.value
+    })
+
 </script>
