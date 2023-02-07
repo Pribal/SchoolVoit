@@ -57,5 +57,11 @@ class DbAnnonce{
 		$result = $objResultat->fetchAll();
 		return $result[0][0]; 
 	}
+
+	public static function ReservAnnonce($id_user,$id_trajet)
+	{
+		$sql = "INSERT INTO reservation (id_reservation, reserve, id_user, id_trajet) VALUES (NULL, '0', $id_user, $id_trajet);";
+		connectPdo::getObjPdo()->exec($sql);
+	}
 }
 ?> 

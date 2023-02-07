@@ -26,6 +26,14 @@ switch($action){
         include('vue/vue_annonces/annonces.php');
         break;
 
+        case 'ReservAnnonce' :
+            $id_user = $_SESSION['id'];
+            $id_trajet = $_POST['id_trajet'];
+            DbAnnonce::ReservAnnonce($id_user,$id_trajet);
+            $listecar = DbAnnonce::getlistecar($id_user);
+            $listeAnnonce = DBAnnonce::getAnnonces($id_user);
+            include ('vue/vue_annonces/annonces.php');
+            break;
 
 }
 
