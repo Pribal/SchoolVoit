@@ -162,47 +162,50 @@ include("model/fonctions_php.php");
             </button>
             <?php
                 $info_annonce = DbAnnonce::getInfoAnnonce($ligne["id_trajet"]);
-            ?>
-            <div class="offcanvas offcanvas-bottom" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
-                <div id="loader-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: flex; justify-content: center; align-items: center;">
-                    <img src="vue/images/car_wheel_loader.gif">
-                </div>
-                <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: none;"></div>
-                <div style="height: 100%; width: 50vw; display: flex; flex-direction: column;">
-                    <div style="display: flex; justify-content: flex-end;">
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="transform: scale(1.3);margin: 1vw;"></button>
+                ?>
+                <div class="offcanvas offcanvas-bottom" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
+                    <div id="loader-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: flex; justify-content: center; align-items: center;">
+                        <img src="vue/images/car_wheel_loader.gif">
                     </div>
-                    <div style="display:flex; align-items: center; flex-direction: column; height: 90%; justify-content: space-between;">
-                        <h3>Trajet de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?></h3>
-                        <div style="display: flex; flex-direction: column; align-items: center;">
-                            <p style="font-size: xxl-large; margin: 0;"><?= $info_annonce[0]["lieu_depart"] ?></p>
-                            <img src="vue/images/route.png" style="height: 3em; width: 3em; transform: rotate(90deg);">
-                            <p style="font-size: xxl-large;"><?= $info_annonce[0]["lieu_arrivee"] ?></p>
-                        </div>
-                        <div style="width: 100%;">
-                            <div style="display: flex; width: 100%;">
-                                <div style="width: 50%; display: flex; align-items: center; flex-direction: column; justify-content: center;">
-                                    <p>Distance: <span id="distance"></span>km</p>
-                                    <p>Durée du trajet: <span id="temps_trajet"></span></p>
+                    <div id="map-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: none;"></div>
+                    <form method="post" action="index.php?ctl=annonce&action=ReservAnnonce" style='padding:0; margin:0;'>
+                        <input type="hidden" name="id_trajet" value="<?= $info_annonce[0]["id_trajet"] ?>">
+                        <div style="height: 100%; width: 50vw; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="transform: scale(1.3);margin: 1vw;"></button>
+                            </div>
+                            <div style="display:flex; align-items: center; flex-direction: column; height: 90%; justify-content: space-between;">
+                                <h3>Trajet de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?></h3>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <p style="font-size: xxl-large; margin: 0;"><?= $info_annonce[0]["lieu_depart"] ?></p>
+                                    <img src="vue/images/route.png" style="height: 3em; width: 3em; transform: rotate(90deg);">
+                                    <p style="font-size: xxl-large;"><?= $info_annonce[0]["lieu_arrivee"] ?></p>
                                 </div>
-                                <div style="width: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                    <img src="vue/images/icon_voiture.png" style="height: 4em; width: 4em;">
-                                    <h5>Voiture de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?>:</h5>
-                                    <?= $info_annonce[0]["marque"]." ".$info_annonce[0]["modele"] ?>
+                                <div style="width: 100%;">
+                                    <div style="display: flex; width: 100%;">
+                                        <div style="width: 50%; display: flex; align-items: center; flex-direction: column; justify-content: center;">
+                                            <p>Distance: <span id="distance"></span>km</p>
+                                            <p>Durée du trajet: <span id="temps_trajet"></span></p>
+                                        </div>
+                                        <div style="width: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                                            <img src="vue/images/icon_voiture.png" style="height: 4em; width: 4em;">
+                                            <h5>Voiture de <?= $info_annonce[0]["prenom"]." ".$info_annonce[0]["nom"] ?>:</h5>
+                                            <?= $info_annonce[0]["marque"]." ".$info_annonce[0]["modele"] ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; width: 90%; align-items: center; justify-content: center;">
+                                    <p style="margin: 0;">Spécification du trajet:</p>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <img src="<?php if($info_annonce[0]["fumeur"]){echo "vue/images/cigarette.png";}else{echo "vue/images/ne-pas-fumer.png";}?>" style="height: 3em; width: 3em;">
+                                </div>
+                                <div style="display:flex; justify-content: flex-end;">
+                                    <button class="btn btn-success">Réserver le trajet</button>
                                 </div>
                             </div>
                         </div>
-                        <div style="display: flex; width: 90%; align-items: center; justify-content: center;">
-                            <p style="margin: 0;">Spécification du trajet:</p>
-                            &nbsp;&nbsp;&nbsp;
-                            <img src="<?php if($info_annonce[0]["fumeur"]){echo "vue/images/cigarette.png";}else{echo "vue/images/ne-pas-fumer.png";}?>" style="height: 3em; width: 3em;">
-                        </div>
-                        <div style="display:flex; justify-content: flex-end;">
-                            <button class="btn btn-success">Réserver le trajet</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </div>
             <?php
         }
         ?>

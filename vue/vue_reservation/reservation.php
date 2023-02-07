@@ -24,7 +24,6 @@
                 <li class="list-group-item">Matricule : <?php echo $ligne['matricule'] ?></li>
                 <li class="list-group-item">Véhicule : <?php echo $ligne['marque'].' '.$ligne['modele'] ?></li>
             </ul>
-
         </div>
         <hr>
     <?php
@@ -92,33 +91,7 @@
                 <a href="index.php?ctl=reservation&action=RefuserDemande&id_reservation=<?= $ligne['id_reservation'] ?>"><img src="vue/images/thumbdown.jpg" width="35px;" height=auto;></a>
             </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Date : <?php echo $ligne['depart'] ?></li>
-            <li class="list-group-item">Lieu départ : <?php echo $ligne['lieu_depart'] ?></li>
-            <li class="list-group-item">Lieu arrivée : <?php echo $ligne['lieu_arrivee'] ?></li>
-            <li class="list-group-item">Nombre de places restantes :
-            <?php 
-                    if($ligne['nb_placeDispo']>0)
-                        echo $ligne['nb_placeDispo'];
-                    else
-                        echo "<span style='color: red;'>Complet</span>";
-                 ?></li>
-            <li class="list-group-item">Fumeur autorisé :
-                 <?php 
-                    if($ligne['fumeur']==0)
-                        echo "Non";
-                    else
-                        echo "Oui";
-                 ?>
-            </li>    
-        </ul>
-        <div class="card-footer">
-            Véhicule
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Matricule : <?php echo $ligne['matricule'] ?></li>
-            <li class="list-group-item">Véhicule : <?php echo $ligne['marque'].' '.$ligne['modele'] ?></li>
-        </ul>
+        
 
     </div>
     <hr>
