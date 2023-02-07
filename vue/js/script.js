@@ -301,3 +301,27 @@ async function create_map_route(adresse1, adresse2, id_trajet)
             end: adresse2
         })
     })}
+
+function update_time(name)
+{
+    obj = document.getElementById(name);
+    date = new Date();
+    if(date.getMonth() < 10)
+    {
+        month = "0"+date.getMonth()
+    }
+    else
+    {
+        month = date.getMonth()
+    }
+    if(date.getDate() < 10)
+    {
+        minutes = "0"+date.getDate()
+    }
+    else
+    {
+        minutes = date.getDate()
+    }
+    date_str = date.getFullYear()+"-"+month+"-"+minutes+"T"+date.getHours()+":"+date.getMinutes()
+    obj.value = date_str
+}
