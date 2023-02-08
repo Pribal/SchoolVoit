@@ -313,8 +313,8 @@ include("model/fonctions_php.php");
             <div style="display: flex; align-items: center; justify-content: flex-start;">
                 <h5 style="border-bottom: blue 2px solid; width: fit-content;">Informations complémentaires</h5>
             </div>
-            <div class='mb-3' style="display: flex; align-items: center; justify-content: center;">
-                <label class="form-label">Trajet fumeur? </label>&nbsp&nbsp&nbsp&nbsp
+            <div class='mb-3' style="display: flex; align-items: center;">
+                <label class="form-label" style="margin: 0;">&nbsp&nbsp&nbsp&nbsp Trajet fumeur: </label>&nbsp&nbsp
                 <img src="vue/images/thumbdown.jpg" width=50 height=50 style="cursor: pointer;" id="fumeur_ok" title="Cliquez sur l'image afin de changer de valeur">
                 <img src="vue/images/thumbup.png" width=50 height=50 style="display: none; cursor: pointer;" id="fumeur_nok" title="Cliquez sur l'image afin de changer de valeur">
                 <input type="hidden" name="fumeur" id="fumeur_input" value="0">
@@ -357,12 +357,12 @@ include("model/fonctions_php.php");
     fumeur_ok.addEventListener("click", function() {
         fumeur_ok.style.display = "none";
         fumeur_nok.style.display = "block";
-        fumeur_input.value = "0"
+        fumeur_input.value = "1"
     })
 
     fumeur_nok.addEventListener("click", function() {
         fumeur_ok.style.display = "block";
         fumeur_nok.style.display = "none";
-        fumeur_input.value = "1"
+        fumeur_input.value = "0"
     })
 </script>

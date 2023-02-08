@@ -302,6 +302,7 @@ async function create_map_route(adresse1, adresse2, id_trajet)
         })
     })}
 
+// Ne pas regarder, code dégeu mais fonctionnel
 function update_time(name)
 {
     obj = document.getElementById(name);
@@ -314,6 +315,7 @@ function update_time(name)
     {
         month = date.getMonth()
     }
+
     if(date.getDate() < 10)
     {
         minutes = "0"+date.getDate()
@@ -322,6 +324,32 @@ function update_time(name)
     {
         minutes = date.getDate()
     }
-    date_str = date.getFullYear()+"-"+month+"-"+minutes+"T"+date.getHours()+":"+date.getMinutes()
+
+    if(date.getDate() < 10)
+    {
+        jour = "0"+date.getDate()
+    }
+    else
+    {
+        jour = date.getDate()
+    }
+
+    if(date.getHours() < 10)
+    {
+        hours = "0"+date.getHours()
+    }
+    else
+    {
+        hours = date.getHours()
+    }
+
+    if(date.getMinutes()<10)
+    {
+        minutes = "0"+date.getMinutes()
+    }
+    else{
+        minutes = date.getMinutes()
+    }
+    date_str = date.getFullYear()+"-"+month+"-"+jour+"T"+hours+":"+minutes
     obj.value = date_str
 }
