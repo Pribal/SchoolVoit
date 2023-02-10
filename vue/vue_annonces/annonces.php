@@ -162,6 +162,8 @@ include("model/fonctions_php.php");
             </button>
             <?php
                 $info_annonce = DbAnnonce::getInfoAnnonce($ligne["id_trajet"]);
+                $info_reserve = DbAnnonce::estDejaReserve($_SESSION['id'],$ligne['id_trajet']);
+
                 ?>
                 <div class="offcanvas offcanvas-bottom" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="<?= "trajet-".$ligne["id_trajet"] ?>" aria-labelledby="offcanvasBottomLabel" style="height: 90vh; display: flex; flex-direction: row;">
                     <div id="loader-<?= $ligne["id_trajet"] ?>" style="height: 100%; width: 50vw; display: flex; justify-content: center; align-items: center;">
@@ -200,7 +202,16 @@ include("model/fonctions_php.php");
                                     <img src="<?php if($info_annonce[0]["fumeur"]){echo "vue/images/cigarette.png";}else{echo "vue/images/ne-pas-fumer.png";}?>" style="height: 3em; width: 3em;">
                                 </div>
                                 <div style="display:flex; justify-content: flex-end;">
-                                    <button class="btn btn-success">Réserver le trajet</button>
+                                    <?php
+                                        if(is_array($info_reserve))
+                                        {
+                                            echo "<button class='btn btn-danger disabled'>Vous avez deja réservé ce trajet</button>";
+                                        }
+                                        else
+                                        {
+                                            echo "<button class='btn btn-success'>Réserver le trajet</button>";
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>

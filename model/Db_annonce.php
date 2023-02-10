@@ -63,5 +63,18 @@ class DbAnnonce{
 		$sql = "INSERT INTO reservation (id_reservation, reserve, id_user, id_trajet) VALUES (NULL, '0', $id_user, $id_trajet);";
 		connectPdo::getObjPdo()->exec($sql);
 	}
+
+	
+	public static function estDejaReserve($id_user,$id_trajet)
+	{
+		$sql = "SELECT * 
+		FROM reservation
+		WHERE id_user = $id_user
+		AND id_trajet = $id_trajet;";
+		$objResultat = connectPdo::getObjPdo()->query($sql);	
+		$result = $objResultat->fetch();
+		return $result;   
+
+	}
 }
 ?> 

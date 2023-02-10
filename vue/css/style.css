@@ -1,0 +1,25 @@
+.flexreservation
+{
+    width:80%;
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.separation{
+	clear: both;
+	position: absolute;
+	height: 120px;
+	width : 5px;
+	background: black;
+}
+
+.separation2{
+	clear: both;
+	position: absolute;
+	height: 50px;
+	width : 5px;
+	background: black;
+	}

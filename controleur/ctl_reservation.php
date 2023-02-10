@@ -35,6 +35,33 @@ switch($action){
         echo "<script>window.location.replace('index.php?ctl=reservation&action=vueReservation');</script>";
         break;
 
+    case 'supprimer_annonce':
+        $id_trajet = $_GET['idtrajet'];
+        DbReservation::supprimer_annonce($id_trajet);
+        $id = $_SESSION['id'];
+        $listeAnnonces = DbReservation::getAnnoncebyID($id);
+        $listeReservations = DbReservation::getReservationbyID($id);
+        $listeDemandeValid = DbReservation::getDemandeValidAnnonce($id);
+        echo "<script>window.location.replace('index.php?ctl=reservation&action=vueReservation');</script>";
+        break;
+
+    case 'supprimer_reservation':
+        $id_reservation = $_GET['idreservation'];
+        $reserve = $_GET['reserve'];    
+        $id_trajet = $_GET['id_trajet'];    
+        DbReservation::supprimer_reservation($id_reservation);
+        if($reserve==1)
+        {
+            DbReservation::rajoute1place($id_trajet);
+        }
+        $id = $_SESSION['id'];
+        $listeAnnonces = DbReservation::getAnnoncebyID($id);
+        $listeReservations = DbReservation::getReservationbyID($id);
+        $listeDemandeValid = DbReservation::getDemandeValidAnnonce($id);
+        echo "<script>window.location.replace('index.php?ctl=reservation&action=vueReservation');</script>";
+        break;
+
+
 }
 
 ?>

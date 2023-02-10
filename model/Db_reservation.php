@@ -57,6 +57,12 @@ class DbReservation{
 		connectPdo::getObjPdo()->exec($sql); 
 	}
 
+	public static function rajoute1place($id_trajet)
+	{
+		$sql = "UPDATE TRAJET SET nb_placeDispo = nb_placeDispo+1 WHERE TRAJET.id_trajet = $id_trajet;";
+		connectPdo::getObjPdo()->exec($sql); 
+	}
+
 	public static function SuppReservationComplete()
 	{
 		$sql = "DELETE FROM RESERVATION WHERE RESERVATION.id_reservation IN (SELECT id_reservation
@@ -65,8 +71,32 @@ class DbReservation{
 																			AND TRAJET.nb_placeDispo <=0
 																			AND RESERVATION.reserve = 0);";
 		connectPdo::getObjPdo()->exec($sql); 
+		
 	}
 
+	public static function estDejaReserve($id_user,$id_trajet)
+	{
+		$sql = "SELECT * 
+		FROM reservation
+		WHERE id_user = $id_user
+		AND id_trajet = $id_trajet;";
+		$objResultat = connectPdo::getObjPdo()->query($sql);	
+		$result = $objResultat->fetch();
+		return $result;   
+
+	}
+
+	public static function supprimer_annonce($id_trajet)
+	{
+		$sql="DELETE FROM trajet WHERE trajet.id_trajet = $id_trajet";
+		connectPdo::getObjPdo()->exec($sql); 
+	}
+
+	public static function supprimer_reservation($id_reservation)
+	{
+		$sql="DELETE FROM reservation WHERE reservation.id_reservation = $id_reservation";
+		connectPdo::getObjPdo()->exec($sql); 
+	}
 
 }
 ?>		
