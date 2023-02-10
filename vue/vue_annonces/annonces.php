@@ -1,8 +1,3 @@
-<!-- <script>
-    window.addEventListener("load", {
-        
-    })
-</script> -->
 <style>
     #bouton_ajout_annonce {
         height: 50%; 
@@ -98,6 +93,47 @@
         font-size: .8em;
         color: gray;
     }
+
+    #idcar {
+        border: 1px black solid;
+        border-radius: 5px;
+        padding: 5px 5px;
+        background-color : transparent; 
+    }
+    
+    #idcar:focus {
+        padding: 5px 5px;
+        border: blue 3px solid;
+        border-radius: 5px;
+    }
+    
+    #idcar:focusin {
+        padding: 5px 5px;   
+        border: blue 3px solid;
+        border-radius: 5px;
+    }
+
+    .radio {
+        appearance : none;
+        width: 20px;
+        height: 20px;
+        border: black 1px solid;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .radio:checked {
+        background-color : green;
+    }
+
+    .radio:not(:checked) {
+        background-color: red;
+    }
+
+    .radio_label {
+        position: absolute;
+        z-index: 99999;
+    }
 </style>
 <?php
 setlocale(LC_TIME, 'fr_FR');
@@ -110,7 +146,7 @@ include("model/fonctions_php.php");
         <h4>Bienvenue <span style="font-size: larger; background-image: url(vue/images/confetti-5.gif); font-size: 50px; font-weight: bolder; color: transparent;  background-clip: text; -webkit-background-clip: text;"><?= ucfirst($_SESSION["prenom"]) ?></span></h4>
     </div>
     <div id="ajout_annonce" style="width: 50%; display: flex; justify-content: center; align-items: center;">
-        <button class="btn btn-primary" id="bouton_ajout_annonce" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Ajouter une annonce</button>
+        <button class="btn btn-primary" id="bouton_ajout_annonce" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="update_time('DateTrajet')">Ajouter une annonce</button>
     </div>
 </div>
 <br><hr><br>
@@ -276,7 +312,7 @@ include("model/fonctions_php.php");
                             ?>
                         </select>
                     </div>
-                    <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">   
                         <label for="nbPlace" class="form-label annonce_text">Nombre de places</label>
                         <p id="nbplace_renderer">0</p>
                         <input type="range" id='nbPlace' name='nbPlace' min="0" max="10" value="0">
@@ -288,15 +324,13 @@ include("model/fonctions_php.php");
             <div style="display: flex; align-items: center; justify-content: flex-start;">
                 <h5 style="border-bottom: blue 2px solid; width: fit-content;">Informations complémentaires</h5>
             </div>
-            <div class='mb-3'>
-                <label class="form-label">Trajet Fumeur: </label>
-                <input type="radio" id="contactChoice1" name="fumeur" value="1">
-                <label for="contactChoice1">Oui</label>
-                <input type="radio" id="contactChoice2"
-                name="fumeur" value="0" checked>
-                <label for="contactChoice2">Non</label>
+            <div class='mb-3' style="display: flex; align-items: center;">
+                <label class="form-label" style="margin: 0;">&nbsp&nbsp&nbsp&nbsp Trajet fumeur: </label>&nbsp&nbsp
+                <img src="vue/images/thumbdown.jpg" width=50 height=50 style="cursor: pointer;" id="fumeur_ok" title="Cliquez sur l'image afin de changer de valeur">
+                <img src="vue/images/thumbup.png" width=50 height=50 style="display: none; cursor: pointer;" id="fumeur_nok" title="Cliquez sur l'image afin de changer de valeur">
+                <input type="hidden" name="fumeur" id="fumeur_input" value="0">
             </div>
-        </div>
+        </div> 
         <div style="display: flex; justify-content: center;" >
             <button type="submit" class="btn btn-primary" style="width: 40%; ">Ajouter</button>
         </div>
@@ -307,6 +341,9 @@ include("model/fonctions_php.php");
 <script>
     const swap_button = document.getElementById("swap")
     const nbplace_range = document.getElementById("nbPlace")
+    const fumeur_ok = document.getElementById("fumeur_ok")
+    const fumeur_nok = document.getElementById("fumeur_nok")
+    const fumeur_input = document.getElementById("fumeur_input")
     
     swap_button.addEventListener("click", function() {
         const depart = document.getElementById("lieuDepart")
@@ -328,4 +365,15 @@ include("model/fonctions_php.php");
         nbplace_renderer.innerHTML = nbplace_range.value
     })
 
+    fumeur_ok.addEventListener("click", function() {
+        fumeur_ok.style.display = "none";
+        fumeur_nok.style.display = "block";
+        fumeur_input.value = "1"
+    })
+
+    fumeur_nok.addEventListener("click", function() {
+        fumeur_ok.style.display = "block";
+        fumeur_nok.style.display = "none";
+        fumeur_input.value = "0"
+    })
 </script>

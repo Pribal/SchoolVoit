@@ -1,5 +1,5 @@
 // Fonction afficher/cacher Modifier Voiture
-function get_id_parent(e)
+async function get_id_parent(e, id_datalist_model)
 {
     // Récup données voiture
     id = e.parentNode.id;
@@ -7,13 +7,38 @@ function get_id_parent(e)
     immat = element.querySelector('#matricule');
     marque = element.querySelector('#marque');
     modele = element.querySelector('#modele');
+
+    empty_datalist(id_datalist_model)
+    array_modele = await get_car_model(marque.value)
+    fill_datalist(array_modele, id_datalist_model)
+    
     
     document.getElementById("id_car").value = id;
-    document.getElementById("marque_form").value = marque.innerHTML; 
-    document.getElementById("modele_form").value = modele.innerHTML; 
-    document.getElementById("matricule_form").value = immat.innerHTML; 
+    document.getElementById("marque_form").value = marque.value; 
+    document.getElementById("modele_form").value = modele.value; 
+    document.getElementById("matricule_form").value = immat.value;
 }
 
+// Fonction pour vider une datalist par son id passé en paramètre
+function empty_datalist(id_datalist)
+{
+    datalist_element = document.getElementById(id_datalist)
+    options = datalist_element.querySelectorAll("option")
+    options.forEach((option) => {
+        datalist_element.removeChild(option)
+    })
+}
+
+function fill_datalist(data_array, id_datalist)
+{
+    datalist_element = document.getElementById(id_datalist)
+    data_array.forEach((model) => {
+        option = document.createElement("option")
+        option.value = model
+        option.innerHTML = model
+        datalist_element.appendChild(option)
+    })  
+}
 // Fonction vérification de la taille de l'immatriculation (<10)
 function verif_immat_ajout(immat)
 {
@@ -301,53 +326,3 @@ async function create_map_route(adresse1, adresse2, id_trajet)
             end: adresse2
         })
     })}
-
-
-function valid_del_annonce(e)
-{
-    id = e.parentNode.id;
-    console.log(id);
-    url_modal = document.getElementById('url_modal_suppAnnonce');
-    url_modal.href = "index.php?ctl=reservation&action=supprimer_annonce&idtrajet=" + id;
-}
-
-function valid_del_reservation(e)
-{
-    id = e.parentNode.id;
-    const temp = id.split('-')
-    console.log(id);
-    id_reservation = temp[0]
-    reserve= temp[1]
-    id_trajet= temp[2]
-    url_modal = document.getElementById('url_modal_suppReservation');
-    url_modal.href = "index.php?ctl=reservation&action=supprimer_reservation&idreservation=" + id_reservation +"&reserve="+reserve+"&id_trajet="+id_trajet;
-}
-
-function accepterReservation(e)
-{
-    id = e.parentNode.id;
-    const temp = id.split('-')
-    console.log(id);
-    id_reservation = temp[0];
-    console.log(id_reservation)
-    id_trajet = temp[1];
-    console.log(id_trajet)
-    url_modal = document.getElementById('url_modal_accepter');
-    url_modal.href = "index.php?ctl=reservation&action=AccepterDemande&id_reservation="+id_reservation+"&id_trajet="+id_trajet
-    console.log(url_modal.href)
-}
-
-function refuserReservation(e)
-{
-    id = e.parentNode.id;
-    const temp = id.split('-')
-    console.log(id);
-    id_reservation = temp[0];
-    console.log(id_reservation)
-    id_trajet = temp[1];
-    console.log(id_trajet)
-    url_modal = document.getElementById('url_modal_refuser');
-    url_modal.href = "index.php?ctl=reservation&action=RefuserDemande&id_reservation="+id_reservation+"&id_trajet="+id_trajet
-    console.log(url_modal.href)
-}
-
