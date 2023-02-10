@@ -10,7 +10,7 @@ class connectPdo
 		 
 		if(!isset(self::$db))
 		{ 
-			self::$db = new PDO('mysql:Host=127.0.0.1;dbname=SchoolVoit;port:3306', 'root', 'root'); 
+			self::$db = new PDO('mysql:Host=127.0.0.1;dbname=SchoolVoit;port:3306', 'root'); 
 			self::$db ->query('SET NAMES utf8'); 
 			self::$db->query('SET CHARACTER SET utf8');   
 		} 

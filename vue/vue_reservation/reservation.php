@@ -18,7 +18,7 @@
                         ?>
                         <div class="col-6" style='margin-bottom:3%;'>
                             <div style="display:flex; justify-content:space-around;">
-                                <div class="card border-dark mb-3" style='max-width:100%;'>
+                                <div class="card border-dark mb-3" style='width:80%;'>
                                     <div class="card-body text-dark">
                                         
                                             <h4 class="card-title" style='display:flex; justify-content:center;'>Annonces n° : <?php echo $ligne['id_trajet'] ?></h4>
@@ -77,7 +77,7 @@
                     ?>
                     <div class="col-6" style='margin-bottom:3%;'>
                         <div style="display:flex; justify-content:space-around;">
-                            <div class="card border-dark mb-3" style='max-width:100%;'>
+                            <div class="card border-dark mb-3" style='width:80%;'>
                                 <div class="card-body text-dark">
                                     
                                         <h4 class="card-title" style='display:flex; justify-content:center;'>Annonces n° : <?php echo $ligne['id_trajet'] ?></h4>
@@ -106,7 +106,7 @@
                                     <br>
                                     <div style='display:flex; justify-content: space-around;'>
                                         <p style='text-align:center;'>Nombre de place : <?php echo $ligne['nb_place'] ?></p>
-                                        <p style='text-align:center;'>Fumeur autorisé : <?php switch($ligne['fumeur']) { case 0: echo "non"; break; case 1: echo "oui"; break;} ?></p>
+                                        <p style='text-align:center;'>Fumeur autorisé : <?php switch($ligne['fumeur']) { case 0: echo "non"; break; case 1: echo "oui"; break;} ?>  </p>
                                     </div>
                                     <hr>
                                     <u><h4 style='text-align:center;'>Statut</h4></u>
@@ -142,7 +142,7 @@
                     ?>
                         <div class="col-6" style='margin-bottom:3%;'>
                             <div style="display:flex; justify-content:space-around;">
-                                <div class="card border-dark mb-3" style='max-width:100%;'>
+                                <div class="card border-dark mb-3" style='max-width:80%;'>
                                     <div class="card-body text-dark">
                                         
                                             <h4 class="card-title" style='display:flex; justify-content:center;'><u>Annonces n° : <?php echo $ligne['id_trajet']?></u></h4>
