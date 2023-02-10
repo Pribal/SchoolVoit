@@ -326,3 +326,111 @@ async function create_map_route(adresse1, adresse2, id_trajet)
             end: adresse2
         })
     })}
+}
+
+// Ne pas regarder, code dégeu mais fonctionnel
+function update_time(name)
+{
+    obj = document.getElementById(name);
+    date = new Date();
+    if(date.getMonth() < 10)
+    {
+        month = "0"+date.getMonth()
+    }
+    else
+    {
+        month = date.getMonth()
+    }
+
+    if(date.getDate() < 10)
+    {
+        minutes = "0"+date.getDate()
+    }
+    else
+    {
+        minutes = date.getDate()
+    }
+
+    if(date.getDate() < 10)
+    {
+        jour = "0"+date.getDate()
+    }
+    else
+    {
+        jour = date.getDate()
+    }
+
+    if(date.getHours() < 10)
+    {
+        hours = "0"+date.getHours()
+    }
+    else
+    {
+        hours = date.getHours()
+    }
+
+    if(date.getMinutes()<10)
+    {
+        minutes = "0"+date.getMinutes()
+    }
+    else{
+        minutes = date.getMinutes()
+    }
+    date_str = date.getFullYear()+"-"+month+"-"+jour+"T"+hours+":"+minutes
+    obj.value = date_str
+}
+
+// fonction pour valider une valeur d'input présente dans une datalist
+async function valid_value_from_datalist(e, datalist, id_msg_error, id_input_modele, id_datalist_model)
+{
+    result = false
+    const input_modele_element = document.getElementById(id_input_modele)
+    const datalist_element = document.getElementById(datalist)
+    const error_msg_element = document.getElementById(id_msg_error)
+    const datalist_modele = document.getElementById(id_datalist_model)
+    empty_datalist(id_datalist_model)
+
+    
+    if(e.value != "")
+    {
+        console.log(datalist_element)
+        datalist_option = datalist_element.querySelectorAll("option")
+        datalist_option.forEach((option) => {
+            if(option.value == e.value)
+            {
+                result = true
+            }
+        })
+
+        if(!result)
+        {
+            error_msg_element.style.display = "block"
+            input_modele_element.setAttribute("disabled", true)
+            input_modele_element.value = ""
+            empty_datalist(id_datalist_model)
+        }
+        else
+        {
+            input_modele_element.removeAttribute("disabled")
+            results = await get_car_model(e.value)
+            fill_datalist(results, id_datalist_model)
+        }
+    }
+    else
+    {
+        input_modele_element.setAttribute("disabled", true)
+        input_modele_element.value = ""
+        error_msg_element.style.display = "none"
+        empty_datalist(id_datalist_model)
+    }
+
+}
+
+async function get_car_model(value)
+{
+    url = "https://cdn.imagin.studio/getCarListing?customer=frpribal&make="+value
+    data = await fetch(url)
+        .then((response) => response.json())
+    return data.modelFamily
+}
+
