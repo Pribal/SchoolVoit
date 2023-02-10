@@ -434,3 +434,52 @@ async function get_car_model(value)
     return data.modelFamily
 }
 
+
+function valid_del_annonce(e)
+{
+    id = e.parentNode.id;
+    console.log(id);
+    url_modal = document.getElementById('url_modal_suppAnnonce');
+    url_modal.href = "index.php?ctl=reservation&action=supprimer_annonce&idtrajet=" + id;
+}
+
+function valid_del_reservation(e)
+{
+    id = e.parentNode.id;
+    const temp = id.split('-')
+    console.log(id);
+    id_reservation = temp[0]
+    reserve= temp[1]
+    id_trajet= temp[2]
+    url_modal = document.getElementById('url_modal_suppReservation');
+    url_modal.href = "index.php?ctl=reservation&action=supprimer_reservation&idreservation=" + id_reservation +"&reserve="+reserve+"&id_trajet";
+}
+
+function accepterReservation(e)
+{
+    id = e.parentNode.id;
+    const temp = id.split('-')
+    console.log(id);
+    id_reservation = temp[0];
+    console.log(id_reservation)
+    id_trajet = temp[1];
+    console.log(id_trajet)
+    url_modal = document.getElementById('url_modal_accepter');
+    url_modal.href = "index.php?ctl=reservation&action=AccepterDemande&id_reservation="+id_reservation+"&id_trajet="+id_trajet
+    console.log(url_modal.href)
+}
+
+function refuserReservation(e)
+{
+    id = e.parentNode.id;
+    const temp = id.split('-')
+    console.log(id);
+    id_reservation = temp[0];
+    console.log(id_reservation)
+    id_trajet = temp[1];
+    console.log(id_trajet)
+    url_modal = document.getElementById('url_modal_refuser');
+    url_modal.href = "index.php?ctl=reservation&action=RefuserDemande&id_reservation="+id_reservation+"&id_trajet="+id_trajet
+    console.log(url_modal.href)
+}
+
