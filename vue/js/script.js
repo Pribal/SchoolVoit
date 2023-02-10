@@ -1,5 +1,5 @@
 // Fonction afficher/cacher Modifier Voiture
-function get_id_parent(e)
+async function get_id_parent(e, id_datalist_model)
 {
     // Récup données voiture
     id = e.parentNode.id;
@@ -7,13 +7,38 @@ function get_id_parent(e)
     immat = element.querySelector('#matricule');
     marque = element.querySelector('#marque');
     modele = element.querySelector('#modele');
+
+    empty_datalist(id_datalist_model)
+    array_modele = await get_car_model(marque.value)
+    fill_datalist(array_modele, id_datalist_model)
+    
     
     document.getElementById("id_car").value = id;
-    document.getElementById("marque_form").value = marque.innerHTML; 
-    document.getElementById("modele_form").value = modele.innerHTML; 
-    document.getElementById("matricule_form").value = immat.innerHTML; 
+    document.getElementById("marque_form").value = marque.value; 
+    document.getElementById("modele_form").value = modele.value; 
+    document.getElementById("matricule_form").value = immat.value;
 }
 
+// Fonction pour vider une datalist par son id passé en paramètre
+function empty_datalist(id_datalist)
+{
+    datalist_element = document.getElementById(id_datalist)
+    options = datalist_element.querySelectorAll("option")
+    options.forEach((option) => {
+        datalist_element.removeChild(option)
+    })
+}
+
+function fill_datalist(data_array, id_datalist)
+{
+    datalist_element = document.getElementById(id_datalist)
+    data_array.forEach((model) => {
+        option = document.createElement("option")
+        option.value = model
+        option.innerHTML = model
+        datalist_element.appendChild(option)
+    })  
+}
 // Fonction vérification de la taille de l'immatriculation (<10)
 function verif_immat_ajout(immat)
 {
@@ -352,4 +377,58 @@ function update_time(name)
     }
     date_str = date.getFullYear()+"-"+month+"-"+jour+"T"+hours+":"+minutes
     obj.value = date_str
+}
+
+// fonction pour valider une valeur d'input présente dans une datalist
+async function valid_value_from_datalist(e, datalist, id_msg_error, id_input_modele, id_datalist_model)
+{
+    result = false
+    const input_modele_element = document.getElementById(id_input_modele)
+    const datalist_element = document.getElementById(datalist)
+    const error_msg_element = document.getElementById(id_msg_error)
+    const datalist_modele = document.getElementById(id_datalist_model)
+    empty_datalist(id_datalist_model)
+
+    
+    if(e.value != "")
+    {
+        console.log(datalist_element)
+        datalist_option = datalist_element.querySelectorAll("option")
+        datalist_option.forEach((option) => {
+            if(option.value == e.value)
+            {
+                result = true
+            }
+        })
+
+        if(!result)
+        {
+            error_msg_element.style.display = "block"
+            input_modele_element.setAttribute("disabled", true)
+            input_modele_element.value = ""
+            empty_datalist(id_datalist_model)
+        }
+        else
+        {
+            input_modele_element.removeAttribute("disabled")
+            results = await get_car_model(e.value)
+            fill_datalist(results, id_datalist_model)
+        }
+    }
+    else
+    {
+        input_modele_element.setAttribute("disabled", true)
+        input_modele_element.value = ""
+        error_msg_element.style.display = "none"
+        empty_datalist(id_datalist_model)
+    }
+
+}
+
+async function get_car_model(value)
+{
+    url = "https://cdn.imagin.studio/getCarListing?customer=frpribal&make="+value
+    data = await fetch(url)
+        .then((response) => response.json())
+    return data.modelFamily
 }
