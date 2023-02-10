@@ -326,7 +326,7 @@ async function create_map_route(adresse1, adresse2, id_trajet)
             end: adresse2
         })
     })}
-}
+
 
 // Ne pas regarder, code dégeu mais fonctionnel
 function update_time(name)
