@@ -60,7 +60,7 @@ class DbAnnonce{
 
 	public static function ReservAnnonce($id_user,$id_trajet)
 	{
-		$sql = "INSERT INTO reservation (id_reservation, reserve, id_user, id_trajet) VALUES (NULL, '0', $id_user, $id_trajet);";
+		$sql = "INSERT INTO RESERVATION (id_reservation, reserve, id_user, id_trajet) VALUES (NULL, '0', $id_user, $id_trajet);";
 		connectPdo::getObjPdo()->exec($sql);
 	}
 
@@ -68,7 +68,7 @@ class DbAnnonce{
 	public static function estDejaReserve($id_user,$id_trajet)
 	{
 		$sql = "SELECT * 
-		FROM reservation
+		FROM RESERVATION
 		WHERE id_user = $id_user
 		AND id_trajet = $id_trajet;";
 		$objResultat = connectPdo::getObjPdo()->query($sql);	

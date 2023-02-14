@@ -77,7 +77,7 @@
                     ?>
                     <div class="col-6" style='margin-bottom:3%;'>
                         <div style="display:flex; justify-content:space-around;">
-                            <div class="card border-dark mb-3" style='width:80%;'>
+                            <div class="card border-dark mb-3">
                                 <div class="card-body text-dark">
                                     
                                         <h4 class="card-title" style='display:flex; justify-content:center;'>Annonces n° : <?php echo $ligne['id_trajet'] ?></h4>
